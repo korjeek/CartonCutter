@@ -26,8 +26,8 @@
         <Grid RowDefinitions="Auto,*">
                 <Grid Name="CustomTitleBar" 
                       Height="40" 
-                      Background="#2B2D30">
-        
+                      Background="#2B2D30"
+                      PointerPressed="OnMoveAndDragWindow">
                         <TextBlock Text="My Custom App" 
                                    VerticalAlignment="Center"
                                    Margin="10,0"
@@ -62,23 +62,29 @@
                 
                 <Grid Grid.Row="1" 
                       Name="ContentContainer"
-                      Background="#262626"
+                      Background="#1E1F22"
                       DragDrop.AllowDrop="True">
-                        <Grid Margin="10">
+                        <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                                <Image Source="../Assets/стрелка.png"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Height="250"
+                                       Width="250"/>
+                                <TextBlock Foreground="White"
+                                           VerticalAlignment="Center"
+                                           Text="Перетащите, чтобы загрузить Excel файл или"/>
                                 <Button Click="OnBrowseClick"
+                                        HorizontalAlignment="Center"
+                                        Padding="0"
                                         Background="Transparent"
                                         BorderThickness="0"
                                         Cursor="Hand">
-                                        <TextBlock Text="Выберите файл"
+                                        <TextBlock Text="выберите его"
                                                    Foreground="#0078D4"
                                                    TextDecorations="Underline"/>
                                 </Button>
-                                
-                                <TextBlock x:Name="StatusMessage"
-                                           Margin="10"
-                                           VerticalAlignment="Bottom"
-                                           Foreground="Red"/>
-                        </Grid>
+                        </StackPanel>
                 </Grid>
         </Grid>
 </Window>
