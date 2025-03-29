@@ -7,14 +7,61 @@
         x:Class="CartonCutter.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="CartonCutter">
+        Title="CartonCutter"
+        WindowStartupLocation="CenterScreen"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        OffScreenMargin="0">
+        
+        <Window.Styles>
+                <Style Selector="Button#CloseButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                        <Setter Property="Background" Value="Red"/>
+                </Style>
+                <Style Selector="Button#CloseButton:pressed /template/ ContentPresenter#PART_ContentPresenter">
+                        <Setter Property="Background" Value="DarkRed"/>
+                </Style>
+        </Window.Styles>
+        
+        <Grid RowDefinitions="Auto,*">
+                <Grid Name="CustomTitleBar" 
+                      Height="40" 
+                      Background="#FF2D2D30">
+        
+                        <TextBlock Text="My Custom App" 
+                                   VerticalAlignment="Center"
+                                   Margin="10,0"
+                                   Foreground="White"/>
+        
+                        <StackPanel Orientation="Horizontal" 
+                                    HorizontalAlignment="Right"
+                                    Spacing="0">
+                                <Button Click="OnMinimizeButtonClick"
+                                        Background="Transparent" 
+                                        Width="50" 
+                                        Height="40" 
+                                        CornerRadius="0">
+                                        <Image Source="../Assets/minimize-512.png" Width="10" Height="10"/>
+                                </Button>
+                                <Button Click="OnChangeWindowStateButton"
+                                        Background="Transparent" 
+                                        Width="50" 
+                                        Height="40" 
+                                        CornerRadius="0">
+                                        <Image Source="../Assets/maximize-512.png" Width="10" Height="10"/>
+                                </Button>
+                                <Button Click="OnCloseButtonClick" 
+                                        x:Name="CloseButton" 
+                                        Background="Transparent" 
+                                        Width="50" Height="40" 
+                                        CornerRadius="0">
+                                        <Image Source="../Assets/close-512.png" Width="16" Height="16"/>
+                                </Button>
+                        </StackPanel>
+                </Grid>
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+                <!-- Контент окна -->
+                <ContentControl Grid.Row="1">
+                        <!-- Ваш основной контент здесь -->
+                </ContentControl>
+        </Grid>
 </Window>
