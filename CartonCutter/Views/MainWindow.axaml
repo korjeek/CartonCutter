@@ -11,7 +11,8 @@
         WindowStartupLocation="CenterScreen"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="NoChrome"
-        OffScreenMargin="0">
+        ExtendClientAreaTitleBarHeightHint="-1"
+        Padding="{Binding $self.OffScreenMargin}">
         
         <Window.Styles>
                 <Style Selector="Button#CloseButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
@@ -25,7 +26,7 @@
         <Grid RowDefinitions="Auto,*">
                 <Grid Name="CustomTitleBar" 
                       Height="40" 
-                      Background="#FF2D2D30">
+                      Background="#2B2D30">
         
                         <TextBlock Text="My Custom App" 
                                    VerticalAlignment="Center"
@@ -58,10 +59,26 @@
                                 </Button>
                         </StackPanel>
                 </Grid>
-
-                <!-- Контент окна -->
-                <ContentControl Grid.Row="1">
-                        <!-- Ваш основной контент здесь -->
-                </ContentControl>
+                
+                <Grid Grid.Row="1" 
+                      Name="ContentContainer"
+                      Background="#262626"
+                      DragDrop.AllowDrop="True">
+                        <Grid Margin="10">
+                                <Button Click="OnBrowseClick"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Cursor="Hand">
+                                        <TextBlock Text="Выберите файл"
+                                                   Foreground="#0078D4"
+                                                   TextDecorations="Underline"/>
+                                </Button>
+                                
+                                <TextBlock x:Name="StatusMessage"
+                                           Margin="10"
+                                           VerticalAlignment="Bottom"
+                                           Foreground="Red"/>
+                        </Grid>
+                </Grid>
         </Grid>
 </Window>
