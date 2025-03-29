@@ -37,6 +37,12 @@ public partial class MainWindow : Window
             image.Source =new Bitmap(AssetLoader.Open(new Uri("avares://CartonCutter/Assets/restore-down-512.png")));
         }
     }
+
+    private void OnMoveAndDragWindow(object sender, PointerPressedEventArgs e)
+    {
+        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+            BeginMoveDrag(e);
+    }
     
     private void OnMinimizeButtonClick(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
     
