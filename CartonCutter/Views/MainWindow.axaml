@@ -15,7 +15,7 @@
         Padding="{Binding $self.OffScreenMargin}">
         
     <Window.Styles>
-        <!-- Указываем правильный путь к файлу стилей -->
+        <!-- Указываем путь к файлу стилей -->
         <StyleInclude Source="avares://CartonCutter/Styles/MainWindowStyles.axaml"/>
     </Window.Styles>
 
@@ -28,7 +28,6 @@
                        VerticalAlignment="Center"
                        Margin="10,0"
                        Foreground="White"/>
-
             <StackPanel Orientation="Horizontal" 
                         HorizontalAlignment="Right"
                         Spacing="0">
@@ -36,7 +35,7 @@
                         Classes="title-bar-button">
                     <Image Source="../Assets/minimize-512.png" Width="10" Height="10"/>
                 </Button>
-                <Button Click="OnChangeWindowStateButton"
+                <Button Click="OnChangeWindowStateButtonClick"
                         Classes="title-bar-button">
                     <Image Source="../Assets/maximize-512.png" Width="10" Height="10"/>
                 </Button>
@@ -54,20 +53,13 @@
               DragDrop.AllowDrop="True">
             <StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                <Image Source="../Assets/стрелка.png"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Height="250"
-                       Width="250"/>
+                <Image Source="../Assets/cloud-computing-512.png"
+                       Classes="cloud-computing-image"/>
                 <TextBlock Foreground="White"
                            VerticalAlignment="Center"
                            Text="Перетащите, чтобы загрузить Excel файл или"/>
                 <Button Click="OnBrowseClick"
-                        HorizontalAlignment="Center"
-                        Padding="0"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Cursor="Hand">
+                        Classes="link-download-button">
                     <TextBlock Text="выберите его"
                                Foreground="#0078D4"
                                TextDecorations="Underline"/>
