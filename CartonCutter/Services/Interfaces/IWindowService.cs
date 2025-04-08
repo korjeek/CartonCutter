@@ -1,4 +1,6 @@
-﻿namespace CartonCutter.Services.Interfaces;
+﻿using Avalonia.Input;
+
+namespace CartonCutter.Services.Interfaces;
 
 public interface IWindowService
 {
@@ -7,4 +9,6 @@ public interface IWindowService
     void ToggleState();
 
     void Minimize();
+
+    void MoveAndDrag(PointerPressedEventArgs pointerPressedEventArgs);
 }

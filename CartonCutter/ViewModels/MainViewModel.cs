@@ -1,13 +1,20 @@
 ﻿using ReactiveUI;
 using System.Windows.Input;
+using Avalonia.Input;
 using CartonCutter.Services.Interfaces;
 
 namespace CartonCutter.ViewModels;
 
-public class MainViewModel(IWindowService windowService, IImageService imageService) : ViewModelBase
+public class MainViewModel(
+    IWindowService windowService, 
+    IImageService imageService,
+    IDragDropFileService dragDropFileService) : ViewModelBase
 {
-    public ICommand CloseCommand { get; } = ReactiveCommand.Create(windowService.Close);
-    public ICommand MinimizeCommand { get; } = ReactiveCommand.Create(windowService.Minimize);
-    public ICommand ToggleWindowStateCommand { get; } = ReactiveCommand.Create(windowService.ToggleState);
-    public ICommand ToggleWindowStateIconCommand { get; } = ReactiveCommand.Create(imageService.SetImage);
+    public ICommand CloseWindow { get; } = ReactiveCommand.Create(windowService.Close);
+    public ICommand MinimizeWindow { get; } = ReactiveCommand.Create(windowService.Minimize);
+    public ICommand ToggleWindowState { get; } = ReactiveCommand.Create(windowService.ToggleState);
+    public ICommand MoveAndDragWindow { get; } = ReactiveCommand.Create<PointerPressedEventArgs>(windowService.MoveAndDrag);
+    public ICommand ToggleWindowStateIcon { get; } = ReactiveCommand.Create(imageService.SetImage);
+    public ICommand DragOverFile { get; } = ReactiveCommand.Create<DragEventArgs>(dragDropFileService.DragOver);
+    public ICommand DropFile { get; } = ReactiveCommand.Create<DragEventArgs>(dragDropFileService.Drop);
 }

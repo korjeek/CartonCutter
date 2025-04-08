@@ -1,44 +1,33 @@
 using System;
-using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
-using Avalonia.Platform.Storage;
+using CartonCutter.Services.Interfaces;
+using CartonCutter.ViewModels;
 
 namespace CartonCutter.Views;
 
 public partial class MainWindow : Window
 {
-    public MainWindow()
+    public MainWindow(MainViewModel viewModel)
     {
+        DataContext = viewModel;
         InitializeComponent();
-        
         AddHandler(DragDrop.DragOverEvent, OnDragOver);
         AddHandler(DragDrop.DropEvent, OnDrop);
     }
     
-    public void OnCloseButtonClick(object sender, RoutedEventArgs e) => Close();
-    
-    public void OnChangeWindowStateButtonClick(object sender, RoutedEventArgs e)
+    private void OnDragOver(object? sender, DragEventArgs eventArgs)
     {
-        var image = ((Button)sender).Content as Image ?? 
-                    throw new ArgumentException("Sender is not Button or content is not Image");
-
-        if (WindowState == WindowState.Maximized)
-            NormalizeWindow(image);
-        else
-            MaximizeWindow(image);
+        if (DataContext is MainViewModel viewModel)
+            viewModel.DragOverFile.Execute(eventArgs);
     }
 
-    public void OnMoveAndDragWindow(object sender, PointerPressedEventArgs e)
+    private void OnDrop(object? sender, DragEventArgs eventArgs)
     {
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            BeginMoveDrag(e);
+        if (DataContext is MainViewModel viewModel)
+            viewModel.DropFile.Execute(eventArgs);
     }
-    
-    public void OnMinimizeButtonClick(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
     
     [Obsolete("Obsolete")]
     private async void OnBrowseClick(object sender, RoutedEventArgs e)
@@ -53,31 +42,5 @@ public partial class MainWindow : Window
         var result = await dialog.ShowAsync(this);
         if (result != null && result.Length != 0)
             Console.WriteLine("Good!");
-    }
-    
-    private void OnDrop(object? sender, DragEventArgs e)
-    {
-        var files = e.Data.GetFiles();
-        if (files == null) 
-            return;
-        
-        var filePath = files.FirstOrDefault()?.TryGetLocalPath();
-        if (!string.IsNullOrEmpty(filePath))
-            Console.WriteLine("Good!");
-    }
-    
-    private static void OnDragOver(object? sender, DragEventArgs e) =>
-        e.DragEffects = e.Data.Contains(DataFormats.Files) ? DragDropEffects.Copy : DragDropEffects.None;
-
-    private void NormalizeWindow(Image image)
-    {
-        WindowState = WindowState.Normal;
-        image.Source = new Bitmap(AssetLoader.Open(new Uri("avares://CartonCutter/Assets/maximize-512.png")));
-    }
-
-    private void MaximizeWindow(Image image)
-    {
-        WindowState = WindowState.Maximized;
-        image.Source = new Bitmap(AssetLoader.Open(new Uri("avares://CartonCutter/Assets/restore-down-512.png")));
     }
 }
