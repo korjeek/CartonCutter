@@ -6,6 +6,7 @@ using System.Linq;
 using Avalonia.Markup.Xaml;
 using CartonCutter.ViewModels;
 using CartonCutter.Views;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CartonCutter;
 
@@ -43,5 +44,10 @@ public partial class App : Avalonia.Application
         {
             BindingPlugins.DataValidators.Remove(plugin);
         }
+    }
+
+    private void ConfigurationServices(IServiceCollection services)
+    {
+        
     }
 }

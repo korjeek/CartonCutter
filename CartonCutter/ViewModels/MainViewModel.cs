@@ -1,23 +1,13 @@
 ﻿using ReactiveUI;
 using System.Windows.Input;
-using CartonCutter.Interfaces;
+using CartonCutter.Services.Interfaces;
 
 namespace CartonCutter.ViewModels;
 
-public class MainViewModel : ViewModelBase
+public class MainViewModel(IWindowService windowService, IImageService imageService) : ViewModelBase
 {
-    private readonly IWindowService _windowService;
-    
-    public ICommand CloseCommand { get; }
-    public ICommand ToggleWindowStateCommand { get; }
-    public ICommand MinimizeCommand { get; }
-
-    public MainViewModel(IWindowService windowService)
-    {
-        _windowService = windowService;
-
-        CloseCommand = ReactiveCommand.Create(_windowService.Close);
-        MinimizeCommand = ReactiveCommand.Create(_windowService.Minimize);
-        ToggleWindowStateCommand = ReactiveCommand.Create(_windowService.ToggleState);
-    }
+    public ICommand CloseCommand { get; } = ReactiveCommand.Create(windowService.Close);
+    public ICommand MinimizeCommand { get; } = ReactiveCommand.Create(windowService.Minimize);
+    public ICommand ToggleWindowStateCommand { get; } = ReactiveCommand.Create(windowService.ToggleState);
+    public ICommand ToggleWindowStateIconCommand { get; } = ReactiveCommand.Create(imageService.SetImage);
 }

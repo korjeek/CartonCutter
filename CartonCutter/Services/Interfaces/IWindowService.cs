@@ -1,7 +1,4 @@
-﻿using Avalonia.Input;
-using Avalonia.Interactivity;
-
-namespace CartonCutter.Interfaces;
+﻿namespace CartonCutter.Services.Interfaces;
 
 public interface IWindowService
 {
