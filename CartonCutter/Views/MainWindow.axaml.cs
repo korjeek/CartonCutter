@@ -10,7 +10,7 @@ using CartonCutter.Interfaces;
 
 namespace CartonCutter.Views;
 
-public partial class MainWindow : Window, IWindowTitleBarHandler
+public partial class MainWindow : Window
 {
     public MainWindow()
     {

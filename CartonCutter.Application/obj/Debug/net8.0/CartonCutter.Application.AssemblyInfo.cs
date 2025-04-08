@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CartonCutter.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e71e8b358a0635690bb957a03a7d183a7a55d054")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dfc67e2987222b86aeaa134b8388c50bf77c7af1")]
 [assembly: System.Reflection.AssemblyProductAttribute("CartonCutter.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CartonCutter.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
