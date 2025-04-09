@@ -1,3 +1,4 @@
+using CartonCutter.Domain.Extensions;
 using CartonCutter.Domain.Models;
 using NPOI.XSSF.UserModel;
 
@@ -8,16 +9,13 @@ public static class ExcelParser
 {
     public static Order[] GetOrders(Stream fileStream)
     {
-        var orders = new List<Order>();
         // using var fileStream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read);
         // TODO: если файл открыт, выбрасывать исключение, сообщать пользователю, что нужно закрыть файл
         
         var workbook = new XSSFWorkbook(fileStream);
         var sheet = workbook.GetSheetAt(workbook.NumberOfSheets - 1);
-        foreach (var row in sheet.Skip(1))
-            orders.Add(row.Cells.GetOrder());
 
-        return orders.ToArray();
+        return sheet.Skip(1).Select(row => row.Cells.GetOrder()).ToArray();
     }
 
     public static void WriteOrdersToXlsxFile(Order[] orders)
