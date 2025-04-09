@@ -11,8 +11,4 @@
       <PackageReference Include="NPOI" Version="2.7.3" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\CartonCutter.Domain\CartonCutter.Domain.csproj" />
-    </ItemGroup>
-
 </Project>
