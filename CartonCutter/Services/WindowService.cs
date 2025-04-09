@@ -1,10 +1,11 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Input;
 using CartonCutter.Services.Interfaces;
+using CartonCutter.Views;
 
 namespace CartonCutter.Services;
 
-public class WindowService(Window window) : IWindowService
+public class WindowService(MainWindow window): IWindowService
 {
     public void Close() => window.Close();
     

@@ -1,5 +1,4 @@
-﻿using Avalonia.Controls;
-using CartonCutter.Services;
+﻿using CartonCutter.Services;
 using CartonCutter.Services.Interfaces;
 using CartonCutter.ViewModels;
 using CartonCutter.Views;
@@ -15,8 +14,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IWindowService, WindowService>();
         services.AddSingleton<IImageService, WindowTitleBarImageService>();
         services.AddSingleton<IDragDropFileService, DragDropFileService>();
-        
-        services.AddTransient<MainWindow>();
-        
+
+        services.AddSingleton<MainWindow>();
     }   
 }

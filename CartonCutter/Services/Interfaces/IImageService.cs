@@ -1,6 +1,8 @@
-﻿namespace CartonCutter.Services.Interfaces;
+﻿using Avalonia.Media;
+
+namespace CartonCutter.Services.Interfaces;
 
 public interface IImageService
 {
-    string SetImage();
+    IImage SetImage();
 }

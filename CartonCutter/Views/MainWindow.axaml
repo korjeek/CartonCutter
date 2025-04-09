@@ -18,21 +18,13 @@
         <!-- Указываем путь к файлу стилей -->
         <StyleInclude Source="avares://CartonCutter/Styles/MainWindowStyles.axaml"/>
     </Window.Styles>
-    
-    <!--<Interaction.Behaviors>
-        <EventTriggerBehavior EventName="PointerPressed">
-            <InvokeCommandAction Command="{Binding MoveAndDragWindow}"/>
-        </EventTriggerBehavior>
-    </Interaction.Behaviors>-->
-    
-    <Design.DataContext>
-        <vm:MainViewModel/>
-    </Design.DataContext>
+
 
     <Grid RowDefinitions="Auto,*">
         <Grid Name="CustomTitleBar" 
               Height="40" 
-              Background="#2B2D30">
+              Background="#2B2D30"
+              PointerPressed="OnPointerPressed">
             
             <TextBlock Text="My Custom App" 
                        VerticalAlignment="Center"

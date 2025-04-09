@@ -21,13 +21,14 @@ public partial class App : Avalonia.Application
         services.AddCommonServices();
         
         var serviceProvider = services.BuildServiceProvider();
-        var viewModel = serviceProvider.GetRequiredService<MainViewModel>();
+        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
-            desktop.MainWindow = new MainWindow(viewModel);
+            desktop.MainWindow = serviceProvider.GetRequiredService<MainWindow>();
+            desktop.MainWindow.DataContext = serviceProvider.GetRequiredService<MainViewModel>();
         }
 
         base.OnFrameworkInitializationCompleted();

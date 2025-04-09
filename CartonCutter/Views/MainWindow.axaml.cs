@@ -2,16 +2,14 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using CartonCutter.Services.Interfaces;
 using CartonCutter.ViewModels;
 
 namespace CartonCutter.Views;
 
 public partial class MainWindow : Window
 {
-    public MainWindow(MainViewModel viewModel)
+    public MainWindow()
     {
-        DataContext = viewModel;
         InitializeComponent();
         AddHandler(DragDrop.DragOverEvent, OnDragOver);
         AddHandler(DragDrop.DropEvent, OnDrop);
@@ -29,8 +27,14 @@ public partial class MainWindow : Window
             viewModel.DropFile.Execute(eventArgs);
     }
     
+    private void OnPointerPressed(object? sender, PointerPressedEventArgs eventArgs)
+    {
+        if (DataContext is MainViewModel viewModel)
+            viewModel.MoveAndDragWindow.Execute(eventArgs);
+    }
+    
     [Obsolete("Obsolete")]
-    private async void OnBrowseClick(object sender, RoutedEventArgs e)
+    private async void OnBrowseClick(object sender, RoutedEventArgs eventArgs)
     {
         var dialog = new OpenFileDialog
         {

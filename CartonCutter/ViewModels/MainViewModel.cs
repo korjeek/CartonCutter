@@ -1,6 +1,7 @@
 ﻿using ReactiveUI;
 using System.Windows.Input;
 using Avalonia.Input;
+using Avalonia.Media;
 using CartonCutter.Services.Interfaces;
 
 namespace CartonCutter.ViewModels;
@@ -14,7 +15,7 @@ public class MainViewModel(
     public ICommand MinimizeWindow { get; } = ReactiveCommand.Create(windowService.Minimize);
     public ICommand ToggleWindowState { get; } = ReactiveCommand.Create(windowService.ToggleState);
     public ICommand MoveAndDragWindow { get; } = ReactiveCommand.Create<PointerPressedEventArgs>(windowService.MoveAndDrag);
-    public ICommand ToggleWindowStateIcon { get; } = ReactiveCommand.Create(imageService.SetImage);
+    public IImage ToggleWindowStateIcon { get; } = imageService.SetImage();
     public ICommand DragOverFile { get; } = ReactiveCommand.Create<DragEventArgs>(dragDropFileService.DragOver);
     public ICommand DropFile { get; } = ReactiveCommand.Create<DragEventArgs>(dragDropFileService.Drop);
 }
