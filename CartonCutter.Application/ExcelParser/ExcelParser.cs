@@ -3,12 +3,13 @@ using NPOI.XSSF.UserModel;
 
 namespace CartonCutter.Application.ExcelParser;
 
+// TODO: async / fluentAPI / 
 public static class ExcelParser
 {
-    public static Order[] GetOrders(string fileLocation)
+    public static Order[] GetOrders(Stream fileStream)
     {
         var orders = new List<Order>();
-        using var fileStream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read);
+        // using var fileStream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read);
         // TODO: если файл открыт, выбрасывать исключение, сообщать пользователю, что нужно закрыть файл
         
         var workbook = new XSSFWorkbook(fileStream);
@@ -28,7 +29,7 @@ public static class ExcelParser
 
         foreach (var order in orders)
         {
-            var row = sheet.CreateRow(curRow);
+            var row = sheet.CreateRow(curRow++);
             row.CreateCell(0).SetCellValue(order.CustomerName);
             row.CreateCell(1).SetCellValue(order.Nomenclature);
             row.CreateCell(2).SetCellValue(order.Characteristic);
@@ -41,7 +42,6 @@ public static class ExcelParser
             row.CreateCell(9).SetCellValue(order.WorkPieceWidth);
             row.CreateCell(10).SetCellValue(order.AmountProductsOnStamp.GetValueOrDefault());
             row.CreateCell(11).SetCellValue(order.Amount);
-            curRow++;
         }
 
         using var fileStream = new FileStream("file.xlsx", FileMode.Create);

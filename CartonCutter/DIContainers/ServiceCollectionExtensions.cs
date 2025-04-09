@@ -14,6 +14,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IWindowService, WindowService>();
         services.AddSingleton<IImageService, WindowTitleBarImageService>();
         services.AddSingleton<IDragDropFileService, DragDropFileService>();
+        services.AddSingleton<IFileDialogService, ExcelFileDialogService>();
 
         services.AddSingleton<MainWindow>();
     }   

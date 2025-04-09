@@ -36,15 +36,6 @@ public partial class MainWindow : Window
     [Obsolete("Obsolete")]
     private async void OnBrowseClick(object sender, RoutedEventArgs eventArgs)
     {
-        var dialog = new OpenFileDialog
-        {
-            Title = "Выберите Excel файл",
-            Filters = { new FileDialogFilter { Name = "Excel Files", Extensions = { "xlsx", "xls" } } },
-            AllowMultiple = false
-        };
-
-        var result = await dialog.ShowAsync(this);
-        if (result != null && result.Length != 0)
-            Console.WriteLine("Good!");
+        
     }
 }

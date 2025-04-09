@@ -61,7 +61,7 @@
                 <TextBlock Foreground="White"
                            VerticalAlignment="Center"
                            Text="Перетащите, чтобы загрузить Excel файл или"/>
-                <Button Click="OnBrowseClick"
+                <Button Command="{Binding OpenFileDialog}"
                         Classes="link-download-button">
                     <TextBlock Text="выберите его"
                                Foreground="#0078D4"
