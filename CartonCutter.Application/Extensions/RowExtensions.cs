@@ -29,10 +29,14 @@ public static class RowExtensions
         if (header == null)
             return;
         
-        if (header.FirstCellNum != 0)
-            row.CreateCell(0).SetBlank();
-        foreach (var cell in header.Cells)
-            row.CreateCell(cell.ColumnIndex).SetCellValue(cell.StringCellValue);
+        for (var i = 0; i < header.Cells.Count; i++)
+        {
+            var j = i;
+            while (j++ < header.Cells[i].ColumnIndex)
+                row.CreateCell(j).SetBlank();
+
+            row.CreateCell(header.Cells[i].ColumnIndex).SetCellValue(header.Cells[i].StringCellValue);
+        }
     }
 
     public static bool IsValid(this IRow row) =>

@@ -26,7 +26,7 @@ public class ExcelParserOrder
         var curRow = 0;
         var sheet = Workbook.CreateSheet("Sheet1");
 
-        sheet.CreateRow(0).FillHeader(Header);
+        sheet.CreateRow(curRow++).FillHeader(Header);
         foreach (var order in Values)
             sheet.CreateRow(curRow++).FillRow(order);
 
