@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="CartonCutter.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
+        x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="CartonCutter"
         WindowStartupLocation="CenterScreen"
@@ -19,11 +19,13 @@
         <StyleInclude Source="avares://CartonCutter/Styles/MainWindowStyles.axaml"/>
     </Window.Styles>
 
+
     <Grid RowDefinitions="Auto,*">
         <Grid Name="CustomTitleBar" 
               Height="40" 
               Background="#2B2D30"
-              PointerPressed="OnMoveAndDragWindow">
+              PointerPressed="OnPointerPressed">
+            
             <TextBlock Text="My Custom App" 
                        VerticalAlignment="Center"
                        Margin="10,0"
@@ -31,15 +33,15 @@
             <StackPanel Orientation="Horizontal" 
                         HorizontalAlignment="Right"
                         Spacing="0">
-                <Button Click="OnMinimizeButtonClick"
+                <Button Command="{Binding MinimizeWindow}"
                         Classes="title-bar-button">
                     <Image Source="../Assets/minimize-512.png" Width="10" Height="10"/>
                 </Button>
-                <Button Click="OnChangeWindowStateButtonClick"
+                <Button Command="{Binding ToggleWindowState}"
                         Classes="title-bar-button">
-                    <Image Source="../Assets/maximize-512.png" Width="10" Height="10"/>
+                    <Image Source="{Binding ToggleWindowStateIcon}" Width="10" Height="10"/>
                 </Button>
-                <Button Click="OnCloseButtonClick" 
+                <Button Command="{Binding CloseWindow}" 
                         x:Name="CloseButton" 
                         Classes="title-bar-button">
                     <Image Source="../Assets/close-512.png" Width="16" Height="16"/>
@@ -51,6 +53,7 @@
               Name="ContentContainer"
               Background="#1E1F22"
               DragDrop.AllowDrop="True">
+            
             <StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Image Source="../Assets/cloud-computing-512.png"
@@ -58,7 +61,7 @@
                 <TextBlock Foreground="White"
                            VerticalAlignment="Center"
                            Text="Перетащите, чтобы загрузить Excel файл или"/>
-                <Button Click="OnBrowseClick"
+                <Button Command="{Binding OpenFileDialog}"
                         Classes="link-download-button">
                     <TextBlock Text="выберите его"
                                Foreground="#0078D4"
