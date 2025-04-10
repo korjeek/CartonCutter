@@ -1,3 +1,5 @@
+using CartonCutter.Domain.Interfaces;
+
 namespace CartonCutter.Domain.Models;
 
 // ключевые поля, которые используются в сортировке:

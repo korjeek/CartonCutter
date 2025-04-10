@@ -15,15 +15,15 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = CartonCutter
-build_property.ProjectDir = A:\RiderProjects\CartonCutter\CartonCutter\
+build_property.ProjectDir = D:\RiderProjects\CartonCutter\CartonCutter\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 
-[A:/RiderProjects/CartonCutter/CartonCutter/App.axaml]
+[D:/RiderProjects/CartonCutter/CartonCutter/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[A:/RiderProjects/CartonCutter/CartonCutter/Styles/MainWindowStyles.axaml]
+[D:/RiderProjects/CartonCutter/CartonCutter/Styles/MainWindowStyles.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[A:/RiderProjects/CartonCutter/CartonCutter/Views/MainWindow.axaml]
+[D:/RiderProjects/CartonCutter/CartonCutter/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

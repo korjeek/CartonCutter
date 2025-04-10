@@ -27,7 +27,7 @@ public class ExcelFileDialogService(MainWindow window): IFileDialogService
         if (file.Count == 0) 
             return;
         
-        var orders = ExcelParser.GetOrders(await file[0].OpenReadAsync());
-        ExcelParser.WriteOrdersToXlsxFile(orders);
+        var orders = ExcelOrderParser.GetOrders(await file[0].OpenReadAsync());
+        ExcelOrderParser.WriteOrdersToXlsxFile(orders);
     }
 }

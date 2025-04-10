@@ -2,6 +2,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
+using CartonCutter.DIContainers;
 using CartonCutter.ViewModels;
 using CartonCutter.Views;
 using Microsoft.Extensions.DependencyInjection;

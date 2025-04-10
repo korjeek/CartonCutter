@@ -11,7 +11,7 @@ public static class ExcelParserExtensions
     /// </summary>
     /// <param name="cells">List of Excel table cells from which the <see cref="Order"/> will be created</param>
     /// <returns>Object of type <see cref="Order"/></returns>
-    public static Order GetOrder(this List<ICell> cells)
+    public static TValue GetOrder<TValue>(this List<ICell> cells)
     {
         var orderForm = new OrderForm(cells.Count);
         foreach (var cell in cells)
