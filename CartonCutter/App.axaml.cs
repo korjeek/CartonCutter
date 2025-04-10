@@ -1,10 +1,11 @@
+using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
 using CartonCutter.ViewModels;
 using CartonCutter.Views;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace CartonCutter;
 
@@ -17,18 +18,15 @@ public partial class App : Avalonia.Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        var services = new ServiceCollection();
-        services.AddCommonServices();
-        
-        var serviceProvider = services.BuildServiceProvider();
-        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
-            desktop.MainWindow = serviceProvider.GetRequiredService<MainWindow>();
-            desktop.MainWindow.DataContext = serviceProvider.GetRequiredService<MainViewModel>();
+            desktop.MainWindow = new MainWindow
+            {
+                DataContext = new MainWindowViewModel(),
+            };
         }
 
         base.OnFrameworkInitializationCompleted();

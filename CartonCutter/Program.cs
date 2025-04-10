@@ -1,6 +1,5 @@
 ﻿using Avalonia;
 using System;
-using Avalonia.ReactiveUI;
 
 namespace CartonCutter;
 
@@ -18,6 +17,5 @@ sealed class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
-            .LogToTrace()
-            .UseReactiveUI();
+            .LogToTrace();
 }

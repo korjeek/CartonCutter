@@ -4,8 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartonCutter", "CartonCutte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartonCutter.Application", "CartonCutter.Application\CartonCutter.Application.csproj", "{C92FC036-75E6-4AF0-896C-8CC158EFB146}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartonCutter.Domain", "CartonCutter.Domain\CartonCutter.Domain.csproj", "{ABF37E3E-8C03-4498-BDDD-FBB882621681}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,9 +18,5 @@ Global
 		{C92FC036-75E6-4AF0-896C-8CC158EFB146}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C92FC036-75E6-4AF0-896C-8CC158EFB146}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C92FC036-75E6-4AF0-896C-8CC158EFB146}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ABF37E3E-8C03-4498-BDDD-FBB882621681}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ABF37E3E-8C03-4498-BDDD-FBB882621681}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ABF37E3E-8C03-4498-BDDD-FBB882621681}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ABF37E3E-8C03-4498-BDDD-FBB882621681}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
