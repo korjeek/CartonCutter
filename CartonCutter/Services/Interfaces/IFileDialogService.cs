@@ -2,5 +2,7 @@
 
 public interface IFileDialogService
 {
+    void OpenFileUploadDialog();
+    
     void OpenFileDownloadDialog();
 }

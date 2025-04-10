@@ -19,5 +19,9 @@ public class MainViewModel(
     public IImage ToggleWindowStateIcon { get; } = imageService.SetImage();
     public ICommand DragOverFile { get; } = ReactiveCommand.Create<DragEventArgs>(dragDropFileService.DragOver);
     public ICommand DropFile { get; } = ReactiveCommand.Create<DragEventArgs>(dragDropFileService.Drop);
-    public ICommand OpenFileDialog { get; } = ReactiveCommand.Create(fileDialogService.OpenFileDownloadDialog);
+    public ICommand OpenFileDialog { get; } = ReactiveCommand.Create(() =>
+    {
+        fileDialogService.OpenFileUploadDialog();
+        fileDialogService.OpenFileDownloadDialog();
+    });
 }

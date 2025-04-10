@@ -8,9 +8,8 @@ public class OrderForm(int fieldsCount)
 
     public void AddFieldAt(ICell field, int index) => OrderFields[index] = field;
     
-    public Order GetOrder()
-    {
-        return new Order(
+    public Order GetOrder() => 
+        new(
             OrderFields[0].StringCellValue,
             OrderFields[1].StringCellValue,
             OrderFields[2].CellType is CellType.Numeric ? 
@@ -25,5 +24,4 @@ public class OrderForm(int fieldsCount)
             OrderFields[10].CellType is CellType.Blank ? null : (int)OrderFields[10].NumericCellValue,
             (int)OrderFields[11].NumericCellValue
         );
-    }
 }

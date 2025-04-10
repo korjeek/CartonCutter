@@ -1,5 +1,4 @@
-﻿using System;
-using Avalonia.Platform.Storage;
+﻿using Avalonia.Platform.Storage;
 using CartonCutter.Application.ExcelParser;
 using CartonCutter.Services.Interfaces;
 using CartonCutter.Views;
@@ -8,7 +7,9 @@ namespace CartonCutter.Services;
 
 public class ExcelFileDialogService(MainWindow window): IFileDialogService
 {
-    public async void OpenFileDownloadDialog()
+    private readonly ExcelParserOrder _excelParser = new();
+    
+    public async void OpenFileUploadDialog()
     {
         var filePickerOptions = new FilePickerOpenOptions
         {
@@ -26,8 +27,31 @@ public class ExcelFileDialogService(MainWindow window): IFileDialogService
         var file = await window.StorageProvider.OpenFilePickerAsync(filePickerOptions);
         if (file.Count == 0) 
             return;
+
+        var fileStream = await file[0].OpenReadAsync();
+        var values = _excelParser.Open(fileStream).Parse().Values;
+    }
+
+    public async void OpenFileDownloadDialog()
+    {
+        var saveFileDialog = new FilePickerSaveOptions
+        {
+            Title = "Сохранения Excel файл",
+            SuggestedFileName = "file.xlsx",
+            FileTypeChoices =
+            [
+                new FilePickerFileType("Excel Files")
+                {
+                    Patterns = ["*.xlsx", "*.xls"]
+                }
+            ]
+        };
+
+        var file = await window.StorageProvider.SaveFilePickerAsync(saveFileDialog);
+        if (file is null)
+            return;
         
-        var orders = ExcelOrderParser.GetOrders(await file[0].OpenReadAsync());
-        ExcelOrderParser.WriteOrdersToXlsxFile(orders);
+        var stream = await file.OpenWriteAsync();
+        _excelParser.Create().Fill().SaveInFile(stream);
     }
 }
