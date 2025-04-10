@@ -7,41 +7,33 @@ namespace CartonCutter.Application.ExcelParser;
 // TODO: async / fluentAPI / 
 public static class ExcelParser
 {
-    public static Order[] GetOrders(Stream fileStream)
+    public static TableView GetOrders(Stream fileStream)
     {
-        // using var fileStream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read);
         // TODO: если файл открыт, выбрасывать исключение, сообщать пользователю, что нужно закрыть файл
         
         var workbook = new XSSFWorkbook(fileStream);
         var sheet = workbook.GetSheetAt(workbook.NumberOfSheets - 1);
+        var tableView = new TableView(sheet.First())
+        {
+            Orders = sheet.Skip(1)
+                .Where(x => x.IsValid())
+                .Select(row => row.Cells.GetOrder()).ToArray()
+        };
 
-        return sheet.Skip(1).Select(row => row.Cells.GetOrder()).ToArray();
+        return tableView;
     }
 
     // TODO: сюда так же будет передаваться путь, где надо сохранить файл
-    public static void WriteOrdersToXlsxFile(Order[] orders)
+    public static void WriteOrdersToXlsxFile(TableView table)
     {
         var workbook = new XSSFWorkbook();
 
         var sheet = workbook.CreateSheet("Sheet1");
         var curRow = 0;
-
-        foreach (var order in orders)
-        {
-            var row = sheet.CreateRow(curRow++);
-            row.CreateCell(0).SetCellValue(order.CustomerName);
-            row.CreateCell(1).SetCellValue(order.Nomenclature);
-            row.CreateCell(2).SetCellValue(order.Characteristic);
-            row.CreateCell(3).SetCellValue(order.Mark);
-            row.CreateCell(4).SetCellValue(order.Length.GetValueOrDefault());
-            row.CreateCell(5).SetCellValue(order.Width.GetValueOrDefault());
-            row.CreateCell(6).SetCellValue(order.Height.GetValueOrDefault());
-            row.CreateCell(7).SetCellValue(order.ShippingDate.ToString());
-            row.CreateCell(8).SetCellValue(order.WorkPieceLength);
-            row.CreateCell(9).SetCellValue(order.WorkPieceWidth);
-            row.CreateCell(10).SetCellValue(order.AmountProductsOnStamp.GetValueOrDefault());
-            row.CreateCell(11).SetCellValue(order.Amount);
-        }
+        sheet.CreateRow(curRow++).FillRow(table.Header);
+        
+        foreach (var order in table.Orders)
+            sheet.CreateRow(curRow++).FillRow(order);
 
         using var fileStream = new FileStream("file.xlsx", FileMode.Create);
         workbook.Write(fileStream);

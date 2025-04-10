@@ -22,12 +22,13 @@ public class ExcelFileDialogService(MainWindow window): IFileDialogService
                 }
             ]
         };
-            
+        
         var file = await window.StorageProvider.OpenFilePickerAsync(filePickerOptions);
         if (file.Count == 0) 
             return;
-        
-        var orders = ExcelParser.GetOrders(await file[0].OpenReadAsync());
-        ExcelParser.WriteOrdersToXlsxFile(orders);
+
+        var table = ExcelParser.GetOrders(await file[0].OpenReadAsync());
+        // сортировка table.Orders = Sort(table.Orders);
+        ExcelParser.WriteOrdersToXlsxFile(table);
     }
 }
