@@ -20,6 +20,7 @@ public static class ExcelParser
         return orders.ToArray();
     }
 
+    // TODO: сюда так же будет передаваться путь, где надо сохранить файл
     public static void WriteOrdersToXlsxFile(Order[] orders)
     {
         var workbook = new XSSFWorkbook();

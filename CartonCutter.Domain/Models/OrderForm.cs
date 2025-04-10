@@ -12,7 +12,7 @@ public static class ListCellsExtensions
 
         return orderForm.GetOrder();
     }
-
+    // TODO: обработать пустые ячейки с числами
     private class OrderForm(int fieldsCount)
     {
         private ICell[] OrderFields { get; } = new ICell[fieldsCount];
