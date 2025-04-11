@@ -8,6 +8,7 @@ public class OrderForm(int fieldsCount)
 
     public void AddFieldAt(ICell field, int index) => OrderFields[index] = field;
     
+    //TODO: переделай
     public Order GetOrder() => 
         new(
             OrderFields[0].StringCellValue,
