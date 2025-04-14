@@ -11,6 +11,7 @@ public class OrderForm(int fieldsCount)
     //TODO: переделай
     public Order GetOrder() => 
         new(
+            OrderFields[0].RowIndex,
             OrderFields[0].StringCellValue,
             OrderFields[1].StringCellValue,
             OrderFields[2].CellType is CellType.Numeric ? 
