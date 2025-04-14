@@ -1,48 +1,60 @@
+using CartonCutter.Application.Extensions;
 using CartonCutter.Domain.Extensions;
 using CartonCutter.Domain.Models;
+using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
 namespace CartonCutter.Application.ExcelParser;
 
-// TODO: async / fluentAPI / 
-public static class ExcelParser
+public class ExcelParserOrder
 {
-    public static Order[] GetOrders(Stream fileStream)
+    public Order[]? Values { get; private set; } = [];
+    private XSSFWorkbook? Workbook { get; set; }
+    private IRow? Header { get; set; }
+    
+    public ExcelParserOrder Create()
     {
-        // using var fileStream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read);
-        // TODO: если файл открыт, выбрасывать исключение, сообщать пользователю, что нужно закрыть файл
+        Workbook = new XSSFWorkbook();
+        return this;
+    }
+
+    public ExcelParserOrder Fill()
+    {
+        if (Values is null || Workbook is null)
+            return this;
         
-        var workbook = new XSSFWorkbook(fileStream);
-        var sheet = workbook.GetSheetAt(workbook.NumberOfSheets - 1);
-
-        return sheet.Skip(1).Select(row => row.Cells.GetOrder()).ToArray();
-    }
-
-    public static void WriteOrdersToXlsxFile(Order[] orders)
-    {
-        var workbook = new XSSFWorkbook();
-
-        var sheet = workbook.CreateSheet("Sheet1");
         var curRow = 0;
+        var sheet = Workbook.CreateSheet("Sheet1");
 
-        foreach (var order in orders)
-        {
-            var row = sheet.CreateRow(curRow++);
-            row.CreateCell(0).SetCellValue(order.CustomerName);
-            row.CreateCell(1).SetCellValue(order.Nomenclature);
-            row.CreateCell(2).SetCellValue(order.Characteristic);
-            row.CreateCell(3).SetCellValue(order.Mark);
-            row.CreateCell(4).SetCellValue(order.Length.GetValueOrDefault());
-            row.CreateCell(5).SetCellValue(order.Width.GetValueOrDefault());
-            row.CreateCell(6).SetCellValue(order.Height.GetValueOrDefault());
-            row.CreateCell(7).SetCellValue(order.ShippingDate.ToString());
-            row.CreateCell(8).SetCellValue(order.WorkPieceLength);
-            row.CreateCell(9).SetCellValue(order.WorkPieceWidth);
-            row.CreateCell(10).SetCellValue(order.AmountProductsOnStamp.GetValueOrDefault());
-            row.CreateCell(11).SetCellValue(order.Amount);
-        }
+        sheet.CreateRow(curRow++).FillHeader(Header);
+        foreach (var order in Values)
+            sheet.CreateRow(curRow++).FillRow(order);
 
-        using var fileStream = new FileStream("file.xlsx", FileMode.Create);
-        workbook.Write(fileStream);
+        return this;
     }
+
+    public ExcelParserOrder Open(Stream fileStream)
+    {
+        Workbook = new XSSFWorkbook(fileStream, true);
+        return this;
+    }
+
+    public ExcelParserOrder Parse()
+    {
+        if (Workbook is null || Workbook.NumberOfSheets == 0)
+            return this;
+            
+        Values = Workbook
+            .GetSheetAt(0)
+            .Skip(1)
+            .Where(row => row.IsValid())
+            .Select(row => row.Cells.GetOrder())
+            .ToArray();
+
+        Header = Workbook.GetSheetAt(0).FirstOrDefault();
+        
+        return this;
+    }
+
+    public void SaveInFile(Stream fileStream) => Workbook?.Write(fileStream);
 }

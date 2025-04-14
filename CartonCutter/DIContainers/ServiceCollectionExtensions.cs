@@ -1,10 +1,11 @@
-﻿using CartonCutter.Services;
+﻿using CartonCutter.Application.ExcelParser;
+using CartonCutter.Services;
 using CartonCutter.Services.Interfaces;
 using CartonCutter.ViewModels;
 using CartonCutter.Views;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CartonCutter;
+namespace CartonCutter.DIContainers;
 
 public static class ServiceCollectionExtensions
 {
