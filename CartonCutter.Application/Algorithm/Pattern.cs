@@ -21,9 +21,9 @@ public class Pattern
         MaxWidth = machineType == MachineType.Machine1030 ? 1030 : 1380;
     }
     
-    public void CalculateWaste(Dictionary<int, Order> ordersDict)
+    public void CalculateWaste(Dictionary<int, Order> ordersCountDict)
     {
-        var totalWidth = Production.Sum(kv => kv.Value * ordersDict[kv.Key].WorkPieceWidth);
+        var totalWidth = Production.Sum(kv => kv.Value * ordersCountDict[kv.Key].WorkPieceWidth);
         Waste = MaxWidth - totalWidth;
     }
 
