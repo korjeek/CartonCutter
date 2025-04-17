@@ -6,28 +6,28 @@ public class Order(
     int id,
     string customerName,
     string nomenclature,
-    string? characteristic,
+    string characteristic,
     string mark,
-    int? length,
-    int? width,
-    int? height,
+    string length,
+    string width,
+    string height,
     DateOnly shippingDate,
     int workPieceLength,
     int workPieceWidth,
-    int? amountProductsOnStamp,
+    string amountProductsOnStamp,
     int amount)
 {
     public int Id { get; } = id;
     public string CustomerName { get; } = customerName;
     public string Nomenclature { get; } = nomenclature;
-    public string? Characteristic { get; } = characteristic;
+    public string Characteristic { get; } = characteristic;
     public string Mark { get; } = mark;
-    public int? Length { get; } = length;
-    public int? Width { get; } = width;
-    public int? Height { get; } = height;
+    public string Length { get; } = length;
+    public string Width { get; } = width;
+    public string Height { get; } = height;
     public DateOnly ShippingDate { get; } = shippingDate;
     public int WorkPieceLength { get; } = workPieceLength;
     public int WorkPieceWidth { get; } = workPieceWidth;
-    public int? AmountProductsOnStamp { get; } = amountProductsOnStamp;
+    public string AmountProductsOnStamp { get; } = amountProductsOnStamp;
     public int Amount { get; } = amount;
 }
