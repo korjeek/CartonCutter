@@ -1,15 +1,29 @@
-﻿using System.Runtime.CompilerServices;
-using CartonCutter.Domain.Models;
+﻿using CartonCutter.Domain.Models;
 
 namespace CartonCutter.Application.Algorithm;
 
-public static class Algorithm
+public class Algorithm
 {
-    private static Order[] orders;
-    
+    private readonly Order[] orders;
+    private readonly ColumnGenerationSolver patternGenerator;
 
-    public static void SetOrders(Order[] orders)
+    public Algorithm(Order[] orders, int threshold)
     {
-        Algorithm.orders = orders;
+        this.orders = orders;
+        patternGenerator = new ColumnGenerationSolver(orders, threshold);
+    }
+
+    public void Solve()
+    {
+        patternGenerator.Solve();
+        var patterns = patternGenerator.GetPatterns();
+        var cplexSolver = new CplexSolver(patterns, orders);
+        cplexSolver.Solve();
+
+
+
+        // Console.WriteLine(patterns.Count);
+        // foreach (var pattern in patterns)
+        //     Console.WriteLine(pattern);
     }
 }

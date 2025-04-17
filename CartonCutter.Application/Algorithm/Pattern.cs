@@ -1,35 +1,35 @@
-using CartonCutter.Domain.Models;
+using System.Collections;
 
 namespace CartonCutter.Application.Algorithm;
 
-public class Pattern
+public class Pattern(int maxWidth) : IEnumerable<(int orderId, int count)>
 {
-    public Dictionary<int, int> Production { get; set; } // id Заготовки её количество
-    public int PatternLength1 { get; }
-    public int PatternLength2 { get; }
-    public double Waste { get; set; }
+    public readonly int MaxWidth = maxWidth;
+    protected readonly Dictionary<int, int> Production = new();
+    public double Waste { get; private set; }
+    public double WastePercentage { get; private set; }
 
-    public MachineType MachineType;
-    public readonly int MaxWidth;
-
-    public Pattern(int patternLength1, int patternLength2 = 0, MachineType machineType = MachineType.Machine1030)
+    public void CalculateWaste(int totalWidth)
     {
-        PatternLength1 = patternLength1;
-        Production = new Dictionary<int, int>();
-        MachineType = machineType;
-        PatternLength2 = machineType == MachineType.Machine1030 ? 0 : patternLength2;
-        MaxWidth = machineType == MachineType.Machine1030 ? 1030 : 1380;
-    }
-    
-    public void CalculateWaste(Dictionary<int, Order> ordersCountDict)
-    {
-        var totalWidth = Production.Sum(kv => kv.Value * ordersCountDict[kv.Key].WorkPieceWidth);
         Waste = MaxWidth - totalWidth;
+        WastePercentage = Waste / totalWidth * 100;
+    }
+
+    public IEnumerator<(int orderId, int count)> GetEnumerator()
+    {
+        foreach (var (k ,v) in Production)
+            for (var i = 0; i < v; i++)
+                yield return (k, v);
     }
 
     public override string ToString()
     {
         var prodStr = string.Join(", ", Production.Select(kv => $"Order {kv.Key}: {kv.Value}"));
-        return $"Pattern (Length: {PatternLength1}) -> [{prodStr}], Waste = {Waste}";
+        return $"Pattern (Length: {Production}) -> [{prodStr}], Waste = {Waste}, Waste percentage = {Waste / MaxWidth * 100}%";
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }

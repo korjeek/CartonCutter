@@ -1,6 +1,7 @@
-﻿using CartonCutter.Application.Algorithm.ColumnGeneration;
+﻿using System.Security.Principal;
 using CartonCutter.Domain.Models;
 using Google.OrTools.LinearSolver;
+using Kaos.Combinatorics;
 
 namespace CartonCutter.Application;
 
@@ -27,12 +28,24 @@ public class Program
         };
 
 
-        var generator = new ColumnGenerationSolver(orders);
-        generator.Solve();
+        var combinations = new Multicombination(5, 3);
+        Console.WriteLine(combinations.RowCount);
+        foreach (var combination in combinations.GetRows())
+        {
+            Console.WriteLine(combination);
+            // Console.WriteLine(combination[0]);
+            // Console.WriteLine(combination[1]);
+            // Console.WriteLine(combination[2]);
+            // Console.WriteLine();
+        }
 
-        foreach (var pattern in generator.GetPatterns())
-            Console.WriteLine(pattern);
-        
+        // var generator = new ColumnGenerationSolver(orders.ToList(), 15);
+        // generator.StupidSolve();
+        //
+        // Console.WriteLine(generator.GetPatterns().Count);
+        // foreach (var pattern in generator.GetPatterns())
+        //     Console.WriteLine(pattern);
+
 
 
         // var solver = Solver.CreateSolver("SCIP");
