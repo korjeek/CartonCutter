@@ -11,7 +11,7 @@ public class ExcelParserOrder
     public Order[]? Values { get; private set; } = [];
     private XSSFWorkbook? Workbook { get; set; }
     private IRow? Header { get; set; }
-    
+
     public ExcelParserOrder Create()
     {
         Workbook = new XSSFWorkbook();
@@ -22,7 +22,7 @@ public class ExcelParserOrder
     {
         if (Values is null || Workbook is null)
             return this;
-        
+
         var curRow = 0;
         var sheet = Workbook.CreateSheet("Sheet1");
 
@@ -43,20 +43,16 @@ public class ExcelParserOrder
     {
         if (Workbook is null || Workbook.NumberOfSheets == 0)
             return this;
-            
+
         Values = Workbook
             .GetSheetAt(0)
             .Skip(1)
             .Where(row => row.IsValid())
-            .Select((row, i) =>
-            {
-                Console.WriteLine(i);
-                return row.Cells.GetOrder(i);
-            })
+            .Select((row, i) => row.Cells.GetOrder(i))
             .ToArray();
 
         Header = Workbook.GetSheetAt(0).FirstOrDefault();
-        
+
         return this;
     }
 

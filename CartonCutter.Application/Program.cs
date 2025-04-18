@@ -1,8 +1,5 @@
-﻿using System.Security.Principal;
-using CartonCutter.Application.Algorithm;
+﻿using CartonCutter.Application.Algorithm;
 using CartonCutter.Domain.Models;
-using Google.OrTools.LinearSolver;
-using Kaos.Combinatorics;
 
 namespace CartonCutter.Application;
 
