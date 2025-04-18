@@ -2,10 +2,10 @@
 
 namespace CartonCutter.Application.Algorithm;
 
-public class Algorithm
+public class Algorithm(Order[] orders, int threshold)
 {
-    private readonly Order[] orders;
-    private readonly ColumnGenerationSolver patternGenerator;
+    private readonly ColumnGenerationSolver patternGenerator = new(orders, threshold);
+    private DistributionSolver distributionSolver = null!;
 
 
     /*
@@ -15,30 +15,39 @@ public class Algorithm
      * Получаем порядок шаблонов, по которому мы можем пройтись
      */
 
-    public Algorithm(Order[] orders, int threshold)
-    {
-        this.orders = orders;
-        patternGenerator = new ColumnGenerationSolver(orders, threshold);
-    }
-
-    public void Solve()
+    public List<Pattern> Solve()
     {
         patternGenerator.Solve();
-        var patterns = patternGenerator.GetPatterns();
-        Console.WriteLine(patterns.Count);
-        foreach (var pattern in patterns)
-            Console.WriteLine(pattern);
+        // var patterns = patternGenerator.GetPatterns();
+        // Console.WriteLine(patterns.Count);
+        // foreach (var pattern in patterns)
+        //     Console.WriteLine(pattern);
         
-
-
-        var distributionSolver = new DistributionSolver(patterns, orders);
+        
+        distributionSolver = new DistributionSolver(patternGenerator.GetPatterns(), orders);
         distributionSolver.Solve();
-        var left = distributionSolver.GetLeftOrdersAmount();
         
-        Console.WriteLine(distributionSolver.GetResultPatterns().Count);
+        
+        
+        // var left = distributionSolver.GetLeftOrdersAmount();
+        //
+        // Console.WriteLine(distributionSolver.GetResultPatterns().Count);
+        // foreach (var pattern in distributionSolver.GetResultPatterns())
+        //     Console.WriteLine(pattern);
+        // foreach (var p in left)
+        //     Console.WriteLine(p);
         foreach (var pattern in distributionSolver.GetResultPatterns())
-            Console.WriteLine(pattern);
-        foreach (var p in left)
-            Console.WriteLine(p);
+        {
+            if (pattern is Pattern1380 pattern1380)
+            {
+                pattern1380.FillOrdersAmountById(orders);
+                continue;
+            }
+            ((Pattern1030)pattern).FillOrdersAmountById();
+        }
+
+        return distributionSolver.GetResultPatterns();
     }
+    
+    public Dictionary<int, int> GetLeftAmountsDictByOrderId() => distributionSolver.GetLeftOrdersAmount();
 }

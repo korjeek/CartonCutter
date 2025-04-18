@@ -1,16 +1,18 @@
 using System.Collections;
+using CartonCutter.Domain.Models;
 
 namespace CartonCutter.Application.Algorithm;
 
 public class Pattern(int maxWidth) : IEnumerable<(int orderId, int orderIdCount)>
 {
     protected readonly Dictionary<int, int> Production = new();
-    
+
+    public Dictionary<int, int> OrdersAmountById { get; } = new();
     public TimeSpan TimeToShip { get; set; }
     public int TotalLinesCount { get; private set; }
     public double Waste { get; private set; }
     public double WastePercentage { get; private set; }
-
+    
     public void CalculateWaste(int totalWidth)
     {
         Waste = maxWidth - totalWidth;

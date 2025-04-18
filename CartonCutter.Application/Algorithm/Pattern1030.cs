@@ -1,17 +1,16 @@
-using System.Collections;
-
 namespace CartonCutter.Application.Algorithm;
 
-public class Pattern1030 : Pattern
+public class Pattern1030(int length) : Pattern(1030)
 {
     public const int MaxWidth = 1030;
-    public int Length { get; }
+    public int Length { get; } = length;
 
     public int ProductTimesAmount { get; set; }
 
-    public Pattern1030(int length) : base(1030)
+    public void FillOrdersAmountById()
     {
-        Length = length;
+        foreach (var (id, _) in Production)
+            OrdersAmountById.Add(id, ProductTimesAmount);
     }
 
     public override string ToString()
