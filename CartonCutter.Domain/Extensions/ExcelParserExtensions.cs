@@ -10,13 +10,14 @@ public static class ExcelParserExtensions
     /// table.
     /// </summary>
     /// <param name="cells">List of Excel table cells from which the <see cref="Order"/> will be created</param>
+    /// <param name="rowNumber">This variable need to correct indexing Orders</param>
     /// <returns>Object of type <see cref="Order"/></returns>
-    public static Order GetOrder(this List<ICell> cells)
+    public static Order GetOrder(this List<ICell> cells, int rowNumber)
     {
         var orderForm = new OrderForm(cells.Count);
         foreach (var cell in cells)
             orderForm.AddFieldAt(cell, cell.ColumnIndex);
 
-        return orderForm.GetOrder();
+        return orderForm.GetOrder(rowNumber + 1);
     }
 }
