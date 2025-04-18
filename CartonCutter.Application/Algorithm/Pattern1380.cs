@@ -1,4 +1,5 @@
-using System.Collections;
+using CartonCutter.Domain.Extensions;
+using CartonCutter.Domain.Models;
 
 namespace CartonCutter.Application.Algorithm;
 
@@ -17,6 +18,19 @@ public class Pattern1380 : Pattern
             throw new ArgumentException("The first length must be bigger than second.");
         BigLength = bigLength;
         SmallLength = smallLength;
+    }
+    
+    public void FillOrdersAmountById(Order[] orders)
+    {
+        foreach (var (id, _) in Production)
+        {
+            if (orders.GetOrderById(id).WorkPieceLength == BigLength)
+            {
+                OrdersAmountById.Add(id, ProductBigTimesAmount);
+                continue;
+            }
+            OrdersAmountById.Add(id, ProductSmallTimesAmount);
+        }
     }
     
     public override string ToString()
