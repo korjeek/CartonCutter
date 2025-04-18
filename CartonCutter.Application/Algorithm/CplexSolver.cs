@@ -38,7 +38,7 @@ public class CplexSolver
         {
             var currentPattern = Patterns[i];
             var minOrderIdAmountInPattern = currentPattern.MinBy(p => Orders[p.orderId - 1].Amount).orderId;
-            currentPattern.GetOrderCountById(minOrderIdAmountInPattern, out var orderInPatternCount);
+            currentPattern.TryGetOrderCountById(minOrderIdAmountInPattern, out var orderInPatternCount);
 
             if (!OrdersConstraints.TryGetValue(minOrderIdAmountInPattern, out var constr))
             {

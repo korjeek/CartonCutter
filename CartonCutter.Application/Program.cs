@@ -1,4 +1,5 @@
 ﻿using System.Security.Principal;
+using CartonCutter.Application.Algorithm;
 using CartonCutter.Domain.Models;
 using Google.OrTools.LinearSolver;
 using Kaos.Combinatorics;
@@ -20,24 +21,51 @@ public class Program
             new Order(4, "", "", "", "", null, null, null,
                 new DateOnly(2025, 1, 23), 1050, 1020, null, 1300),
             new Order(5, "", "", "", "", null, null, null,
-                new DateOnly(2025, 1, 23), 330, 596, null, 300),
+                new DateOnly(2025, 4, 20), 330, 596, null, 300),
             new Order(6, "", "", "", "", null, null, null, 
                 new DateOnly(2025, 1, 23), 1390, 422, null, 3000),
             new Order(7, "", "", "", "", null, null, null, 
                 new DateOnly(2025, 1, 23), 2067, 598, null, 2700)
         };
 
+        var patternGenerator = new ColumnGenerationSolver(orders, 19);
+        patternGenerator.Solve();
+        var patterns = patternGenerator.GetPatterns();
+        Console.WriteLine(patterns.Count);
+        Console.WriteLine(string.Join("\n", patterns));
+        
+        
+        Console.WriteLine();
+        
+        var distributionSolver = new DistributionSolver(patterns, orders);
+        distributionSolver.Solve();
+        var left = distributionSolver.GetLeftOrdersAmount();
+        
+        Console.WriteLine(distributionSolver.GetResultPatterns().Count);
+        Console.WriteLine($"Result\n{string.Join("\n", distributionSolver.GetResultPatterns())}");
+        Console.WriteLine($"Left\n{string.Join("\n", left)}");
 
-        var combinations = new Multicombination(5, 3);
-        Console.WriteLine(combinations.RowCount);
-        foreach (var combination in combinations.GetRows())
-        {
-            Console.WriteLine(combination);
-            // Console.WriteLine(combination[0]);
-            // Console.WriteLine(combination[1]);
-            // Console.WriteLine(combination[2]);
-            // Console.WriteLine();
-        }
+        // var d1 = new DateOnly(2004, 12, 11);
+        // var d2 = new DateOnly(2000, 11, 1);
+        // var d3 = d2.ToDateTime(TimeOnly.MinValue) - d1.ToDateTime(TimeOnly.MinValue);
+        // var r = d1.CompareTo(d2);
+        // Console.WriteLine(r);
+        // Console.WriteLine($"{d3.Days} {d3.Hours}");
+        // Console.WriteLine($"{d3}");
+        // Console.WriteLine(new TimeSpan(12, 12, 12, 12) > d3);
+        // Console.WriteLine((DateTime.Today - d1.ToDateTime(TimeOnly.MinValue)).Days );
+
+
+        // var combinations = new Multicombination(5, 3);
+        // Console.WriteLine(combinations.RowCount);
+        // foreach (var combination in combinations.GetRows())
+        // {
+        //     Console.WriteLine(combination);
+        //     // Console.WriteLine(combination[0]);
+        //     // Console.WriteLine(combination[1]);
+        //     // Console.WriteLine(combination[2]);
+        //     // Console.WriteLine();
+        // }
 
         // var generator = new ColumnGenerationSolver(orders.ToList(), 15);
         // generator.StupidSolve();

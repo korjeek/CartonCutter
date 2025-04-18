@@ -2,22 +2,22 @@ using System.Collections;
 
 namespace CartonCutter.Application.Algorithm;
 
-public class Pattern1030(int patternLength) : Pattern(1030), IEnumerable<(int orderId, int count)>
+public class Pattern1030 : Pattern
 {
-    public int PatternLength { get; } = patternLength;
-    
-    public int ProductTimesCount { get; set; }
-    
-    public void AddOrderIdInProduction(int orderId)
+    public const int MaxWidth = 1030;
+    public int Length { get; }
+
+    public int ProductTimesAmount { get; set; }
+
+    public Pattern1030(int length) : base(1030)
     {
-        if (!Production.TryAdd(orderId, 1))
-            Production[orderId] += 1;
+        Length = length;
     }
-    
-    public bool GetOrderCountById(int orderId, out int orderInPatternCount)
+
+    public override string ToString()
     {
-        var b = Production.TryGetValue(orderId, out var v);
-        orderInPatternCount = v;
-        return b;
+        var prodStr = string.Join(", ", Production.Select(kv => $"Order {kv.Key}: {kv.Value}"));
+        return
+            $"Pattern1030 (Length: {Length}) -> [{prodStr}], Amount = {ProductTimesAmount}, Waste = {Waste}, Waste percentage = {Waste / MaxWidth * 100}%";
     }
 }
