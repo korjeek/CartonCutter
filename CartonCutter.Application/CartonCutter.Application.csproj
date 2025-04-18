@@ -8,6 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Google.OrTools" Version="9.12.4544" />
+      <PackageReference Include="Kaos.Combinatorics" Version="5.0.0" />
       <PackageReference Include="NPOI" Version="2.7.3" />
     </ItemGroup>
 

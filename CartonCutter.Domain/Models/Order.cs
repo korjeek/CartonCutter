@@ -1,7 +1,7 @@
 namespace CartonCutter.Domain.Models;
 
 // ключевые поля, которые используются в сортировке:
-// Mark, ShippingDate, WorkPieceLength, WorkPieceWidth, Amount
+// Mark, ShippingDate, WorkPieceLength, WorkPieceWidth, WorkPieceLength, Amount
 public class Order(
     int id,
     string customerName,
