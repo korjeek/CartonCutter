@@ -14,7 +14,7 @@ public class OrderForm(int fieldsCount)
         return new Order(
             rowIndex,
             formatter.FormatCellValue(OrderFields[0]),
-            formatter.FormatCellValue(OrderFields[0]),
+            formatter.FormatCellValue(OrderFields[1]),
             formatter.FormatCellValue(OrderFields[2]),
             formatter.FormatCellValue(OrderFields[3]),
             formatter.FormatCellValue(OrderFields[4]),

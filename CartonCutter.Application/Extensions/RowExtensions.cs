@@ -10,6 +10,11 @@ public static class RowExtensions
     
     public static void FillRow(this IRow row, Order order)
     {
+        if (order.Id == -1)
+        {
+            row.CreateCell(0).SetBlank();
+            return;
+        }
         row.CreateCell(0).SetCellValue(order.CustomerName);
         row.CreateCell(1).SetCellValue(order.Nomenclature);
         row.CreateCell(2).SetCellValue(order.Characteristic);

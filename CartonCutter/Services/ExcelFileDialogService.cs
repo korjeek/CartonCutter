@@ -32,8 +32,8 @@ public class ExcelFileDialogService(MainWindow window): IFileDialogService
         var fileStream = await file[0].OpenReadAsync();
         var values = _excelParser.Open(fileStream).Parse().Values;
 
-        var algorithm = new Algorithm(values, 20);
-        algorithm.Solve();
+        var algorithm = new Algorithm(values, 12);
+        _excelParser.UpdateValuesBySorted(algorithm.Solve());
     }
 
     public async void OpenFileDownloadDialog()

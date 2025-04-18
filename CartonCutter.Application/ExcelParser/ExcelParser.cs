@@ -1,3 +1,4 @@
+using CartonCutter.Application.Algorithm;
 using CartonCutter.Application.Extensions;
 using CartonCutter.Domain.Extensions;
 using CartonCutter.Domain.Models;
@@ -54,6 +55,21 @@ public class ExcelParserOrder
         Header = Workbook.GetSheetAt(0).FirstOrDefault();
 
         return this;
+    }
+
+    public void UpdateValuesBySorted(List<Pattern> patterns)
+    {
+        var newValues = new List<Order>();
+        foreach (var pattern in patterns)
+        {
+            foreach (var (orderId, amount) in pattern)
+                for (var i = 0; i < amount; i++)
+                    newValues.AddOrderWithNewAmount(Values!.GetOrderById(orderId), orderId, pattern.OrdersAmountById[orderId]);
+
+            newValues.AddEmptyOrder();
+        }
+
+        Values = newValues.ToArray();
     }
 
     public void SaveInFile(Stream fileStream) => Workbook?.Write(fileStream);
