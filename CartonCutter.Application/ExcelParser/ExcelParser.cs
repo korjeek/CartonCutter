@@ -48,7 +48,11 @@ public class ExcelParserOrder
             .GetSheetAt(0)
             .Skip(1)
             .Where(row => row.IsValid())
-            .Select(row => row.Cells.GetOrder())
+            .Select((row, i) =>
+            {
+                Console.WriteLine(i);
+                return row.Cells.GetOrder(i);
+            })
             .ToArray();
 
         Header = Workbook.GetSheetAt(0).FirstOrDefault();

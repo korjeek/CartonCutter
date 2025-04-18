@@ -8,11 +8,11 @@ public class OrderForm(int fieldsCount)
     
     public void AddFieldAt(ICell field, int index) => OrderFields[index] = field;
     
-    public Order GetOrder()
+    public Order GetOrder(int rowIndex)
     {
         var formatter = new DataFormatter();
         return new Order(
-            OrderFields[0].RowIndex,
+            rowIndex,
             formatter.FormatCellValue(OrderFields[0]),
             formatter.FormatCellValue(OrderFields[0]),
             formatter.FormatCellValue(OrderFields[2]),
