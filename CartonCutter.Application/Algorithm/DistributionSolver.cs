@@ -116,7 +116,7 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
                     var probDiff = pattern1380.SmallLength - lastDiff;
                     if (probDiff < lastDiff)
                         minSmallOrderAmount++;
-                } // BOLSHOY CHLEN
+                }
 
                 if (minSmallOrderAmount <= 0 || minBigOrdersAmount <= 0)
                     continue;
