@@ -50,7 +50,7 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
                         return kv.Value / orderInPatternCount + (kv.Value % orderInPatternCount == 0 ? 0 : 1);
                     })
                     .Min(); // Нашли допустимое количество шаблонов, которе можно сделать, чтобы не выйти за пределы каждого заказа
-                if (minOrderAmount < 0)
+                if (minOrderAmount <= 0)
                     continue;
                 foreach (var (orderId, orderIdCount) in pattern1030)
                     ordersLeftAmount[orderId] -= minOrderAmount * orderIdCount;
