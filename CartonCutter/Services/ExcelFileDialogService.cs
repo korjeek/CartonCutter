@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using Avalonia.Platform.Storage;
+﻿using Avalonia.Platform.Storage;
 using CartonCutter.Application.ExcelParser;
 using CartonCutter.Services.Interfaces;
 using CartonCutter.Views;

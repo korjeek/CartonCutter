@@ -11,11 +11,14 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
     public Dictionary<int, int> GetLeftOrdersAmount() => _ordersLeftAmount
         .Where(kv => kv.Value != 0)
         .ToDictionary();
-    public List<Pattern> GetResultPatterns() => _resultPatterns;
-    public void Solve()
+    public List<Pattern> GetResultPatterns() => resultPatterns;
+    public async Task Solve()
     {
-        SortPatterns();
-        DistributeOrders();
+        await Task.Run(() =>
+        {
+            SortPatterns();
+            DistributeOrders();
+        });
     }
 
     private void SortPatterns()
