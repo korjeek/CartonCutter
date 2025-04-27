@@ -192,13 +192,16 @@ public class ColumnGenerationSolver(Order[] orders, int threshold)
         return result;
     }
 
-    public void Solve()
+    public async Task Solve()
     {
         var lengthsSet = new HashSet<int>();
-        GenerateOneLinePatterns();
-        GenerateTwoLinePatterns(lengthsSet);
-        GenerateThreeLinePatterns(lengthsSet);
-        GenerateFourLinePatterns(lengthsSet);
+        await Task.Run(() =>
+        {
+            GenerateOneLinePatterns();
+            GenerateTwoLinePatterns(lengthsSet);
+            GenerateThreeLinePatterns(lengthsSet);
+            GenerateFourLinePatterns(lengthsSet);
+        });
     }
 
     public List<Pattern> GetPatterns() => patterns;

@@ -7,33 +7,37 @@ public class Algorithm(Order[] orders, int threshold)
     private readonly ColumnGenerationSolver patternGenerator = new(orders, threshold);
     private DistributionSolver distributionSolver = null!;
     
-    public List<Pattern> Solve()
+    public async Task<List<Pattern>> Solve()
     {
-        patternGenerator.Solve();
-        Console.WriteLine(patternGenerator.GetPatterns().Count);
-        foreach (var pattern in patternGenerator.GetPatterns())
-            Console.WriteLine(pattern);
+        await patternGenerator.Solve();
+        // Console.WriteLine(patternGenerator.GetPatterns().Count);
+        // foreach (var pattern in patternGenerator.GetPatterns())
+        //     Console.WriteLine(pattern);
         
-        Console.WriteLine();
+        // Console.WriteLine();
         distributionSolver = new DistributionSolver(patternGenerator.GetPatterns(), orders);
-        distributionSolver.Solve();
-        Console.WriteLine(distributionSolver.GetResultPatterns().Count);
-        foreach (var pattern in distributionSolver.GetResultPatterns()) 
-            Console.WriteLine(pattern);
+        await distributionSolver.Solve();
+        // Console.WriteLine(distributionSolver.GetResultPatterns().Count);
+        // foreach (var pattern in distributionSolver.GetResultPatterns()) 
+        //     Console.WriteLine(pattern);
         
-        Console.WriteLine("\nLeft");
-        foreach (var p in distributionSolver.GetLeftOrdersAmount())
-            Console.WriteLine(p);
-        
-        foreach (var pattern in distributionSolver.GetResultPatterns())
+        // Console.WriteLine("\nLeft");
+        // foreach (var p in distributionSolver.GetLeftOrdersAmount())
+        //     Console.WriteLine(p);
+
+        await Task.Run(() =>
         {
-            if (pattern is Pattern1380 pattern1380)
+            foreach (var pattern in distributionSolver.GetResultPatterns())
             {
-                pattern1380.FillOrdersAmountById(orders);
-                continue;
+                if (pattern is Pattern1380 pattern1380)
+                {
+                    pattern1380.FillOrdersAmountById(orders);
+                    continue;
+                }
+
+                ((Pattern1030)pattern).FillOrdersAmountById();
             }
-            ((Pattern1030)pattern).FillOrdersAmountById();
-        }
+        });
 
         return distributionSolver.GetResultPatterns();
     }
