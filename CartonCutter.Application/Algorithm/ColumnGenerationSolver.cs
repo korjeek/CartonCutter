@@ -160,6 +160,7 @@ public class ColumnGenerationSolver(Order[] orders, int threshold)
 
             if (piece1.Mark == piece2.Mark &&
                 piece2.Mark == piece3.Mark &&
+                piece3.Mark == piece4.Mark &&
                 lengthsSet.Count is 1 or 2 &&
                 totalPieceWidth <= Pattern1380.MaxWidth &&
                 IsPassedThreshold(Pattern1380.MaxWidth - totalPieceWidth, Pattern1380.MaxWidth))

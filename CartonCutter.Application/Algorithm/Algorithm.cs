@@ -10,8 +10,20 @@ public class Algorithm(Order[] orders, int threshold)
     public List<Pattern> Solve()
     {
         patternGenerator.Solve();
+        Console.WriteLine(patternGenerator.GetPatterns().Count);
+        foreach (var pattern in patternGenerator.GetPatterns())
+            Console.WriteLine(pattern);
+        
+        Console.WriteLine();
         distributionSolver = new DistributionSolver(patternGenerator.GetPatterns(), orders);
         distributionSolver.Solve();
+        Console.WriteLine(distributionSolver.GetResultPatterns().Count);
+        foreach (var pattern in distributionSolver.GetResultPatterns()) 
+            Console.WriteLine(pattern);
+        
+        Console.WriteLine("\nLeft");
+        foreach (var p in distributionSolver.GetLeftOrdersAmount())
+            Console.WriteLine(p);
         
         foreach (var pattern in distributionSolver.GetResultPatterns())
         {
