@@ -32,7 +32,8 @@
                        Foreground="White"/>
             <StackPanel Orientation="Horizontal" 
                         HorizontalAlignment="Right"
-                        Spacing="0">
+                        Spacing="0"
+                        IsVisible="{Binding IsProgramWorking}">
                 <Button Command="{Binding MinimizeWindow}"
                         Classes="title-bar-button">
                     <Image Source="../Assets/minimize-512.png" Width="10" Height="10"/>

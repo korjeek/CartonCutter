@@ -1,8 +1,11 @@
-﻿namespace CartonCutter.Services.Interfaces;
+﻿using System.IO;
+using System.Threading.Tasks;
+
+namespace CartonCutter.Services.Interfaces;
 
 public interface IFileDialogService
 {
-    void OpenFileUploadDialog();
+    Task<Stream?> OpenFileUploadDialogAsync();
     
-    void OpenFileDownloadDialog();
+    Task OpenFileDownloadDialogAsync();
 }

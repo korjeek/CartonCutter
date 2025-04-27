@@ -5,13 +5,13 @@ namespace CartonCutter.Application.Algorithm;
 
 public class DistributionSolver(List<Pattern> patterns, Order[] orders)
 {
-    private readonly Dictionary<int, int> ordersLeftAmount = new(); // id заказа и оставшееся количество
-    private readonly List<Pattern> resultPatterns = [];
+    private readonly Dictionary<int, int> _ordersLeftAmount = new(); // id заказа и оставшееся количество
+    private readonly List<Pattern> _resultPatterns = [];
 
-    public Dictionary<int, int> GetLeftOrdersAmount() => ordersLeftAmount
+    public Dictionary<int, int> GetLeftOrdersAmount() => _ordersLeftAmount
         .Where(kv => kv.Value != 0)
         .ToDictionary();
-    public List<Pattern> GetResultPatterns() => resultPatterns;
+    public List<Pattern> GetResultPatterns() => _resultPatterns;
     public void Solve()
     {
         SortPatterns();
@@ -42,7 +42,7 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
         {
             if (pattern is Pattern1030 pattern1030)
             {
-                var minOrderAmount = ordersLeftAmount
+                var minOrderAmount = _ordersLeftAmount
                     .Where(kv => pattern1030.TryGetOrderCountById(kv.Key, out _))
                     .Select(kv =>
                     {
@@ -53,10 +53,10 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
                 if (minOrderAmount <= 0)
                     continue;
                 foreach (var (orderId, orderIdCount) in pattern1030)
-                    ordersLeftAmount[orderId] -= minOrderAmount * orderIdCount;
+                    _ordersLeftAmount[orderId] -= minOrderAmount * orderIdCount;
 
                 pattern1030.ProductTimesAmount = minOrderAmount;
-                resultPatterns.Add(pattern1030);
+                _resultPatterns.Add(pattern1030);
             }
             
             /*
@@ -70,7 +70,7 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
              */
             if (pattern is Pattern1380 pattern1380)
             {
-                var minSmallOrderAmount = ordersLeftAmount
+                var minSmallOrderAmount = _ordersLeftAmount
                     .Where(kv => pattern1380.TryGetOrderCountById(kv.Key, out _))
                     .Where(kv =>
                         orders.GetOrderById(kv.Key).WorkPieceLength == pattern1380.SmallLength)
@@ -80,7 +80,7 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
                         return kv.Value / orderInPatternCount + (kv.Value % orderInPatternCount == 0 ? 0 : 1);
                     })
                     .Min();
-                var minBigOrdersAmount = ordersLeftAmount
+                var minBigOrdersAmount = _ordersLeftAmount
                     .Where(kv => pattern1380.TryGetOrderCountById(kv.Key, out _))
                     .Where(kv =>
                         orders.GetOrderById(kv.Key).WorkPieceLength == pattern1380.BigLength)
@@ -122,14 +122,14 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
                     continue;
 
                 foreach (var (orderId, orderIdCount) in pattern1380)
-                    ordersLeftAmount[orderId] -= 
+                    _ordersLeftAmount[orderId] -= 
                         orders.GetOrderById(orderId).WorkPieceLength == pattern1380.BigLength ? 
                             minBigOrdersAmount : minSmallOrderAmount  * orderIdCount;
                 
                 
                 pattern1380.ProductBigTimesAmount = minBigOrdersAmount;
                 pattern1380.ProductSmallTimesAmount = minSmallOrderAmount;
-                resultPatterns.Add(pattern1380);
+                _resultPatterns.Add(pattern1380);
             }
         }
     }
@@ -137,6 +137,6 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
     private void FillInitialLeftAmountDictionary()
     {
         foreach (var order in orders)
-            ordersLeftAmount.Add(order.Id, order.Amount);
+            _ordersLeftAmount.Add(order.Id, order.Amount);
     }
 }

@@ -10,7 +10,8 @@ public class MainViewModel(
     IWindowService windowService, 
     IImageService imageService,
     IDragDropFileService dragDropFileService,
-    IFileDialogService fileDialogService) : ViewModelBase
+    IFileDialogService fileDialogService,
+    IProgramService programService) : ViewModelBase
 {
     public ICommand CloseWindow { get; } = ReactiveCommand.Create(windowService.Close);
     public ICommand MinimizeWindow { get; } = ReactiveCommand.Create(windowService.Minimize);
@@ -19,9 +20,16 @@ public class MainViewModel(
     public IImage ToggleWindowStateIcon { get; } = imageService.SetImage();
     public ICommand DragOverFile { get; } = ReactiveCommand.Create<DragEventArgs>(dragDropFileService.DragOver);
     public ICommand DropFile { get; } = ReactiveCommand.Create<DragEventArgs>(dragDropFileService.Drop);
-    public ICommand OpenFileDialog { get; } = ReactiveCommand.Create(() =>
+    public ICommand OpenFileDialog { get; } = ReactiveCommand.Create(async () =>
     {
-        fileDialogService.OpenFileUploadDialog();
-        fileDialogService.OpenFileDownloadDialog();
+        var stream = await fileDialogService.OpenFileUploadDialogAsync();
+        if (stream != null)
+        {
+            IsProgramWorking = true;
+            programService.ExecuteProgram();
+            await fileDialogService.OpenFileDownloadDialogAsync();
+        }
     });
+
+    public bool IsProgramWorking { get; set; }
 }

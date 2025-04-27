@@ -5,7 +5,7 @@ namespace CartonCutter.Application.Algorithm;
 
 public class ColumnGenerationSolver(Order[] orders, int threshold)
 {
-    private readonly List<Pattern> patterns = [];
+    private readonly List<Pattern> _patterns = [];
 
     private bool IsPassedThreshold(double waste, int totalWidth) => waste / totalWidth * 100 <= threshold;
 
@@ -23,7 +23,7 @@ public class ColumnGenerationSolver(Order[] orders, int threshold)
             newPattern.TimeToShip = (piece.ShippingDate.ToDateTime(TimeOnly.MinValue) - DateTime.Today).Duration();
             newPattern.CountLines();
             newPattern.CalculateWaste(piece.WorkPieceWidth);
-            patterns.Add(newPattern);
+            _patterns.Add(newPattern);
         }
     }
 
@@ -55,7 +55,7 @@ public class ColumnGenerationSolver(Order[] orders, int threshold)
                         .ToDateTime(TimeOnly.MinValue) - DateTime.Today).Duration();
                 newPattern.CountLines();
                 newPattern.CalculateWaste(totalPieceWidth);
-                patterns.Add(newPattern);
+                _patterns.Add(newPattern);
             }
 
             // 2. Если разных длин
@@ -75,7 +75,7 @@ public class ColumnGenerationSolver(Order[] orders, int threshold)
                         .ToDateTime(TimeOnly.MinValue) - DateTime.Today).Duration();
                 newPattern.CountLines();
                 newPattern.CalculateWaste(totalPieceWidth);
-                patterns.Add(newPattern);
+                _patterns.Add(newPattern);
             }
         }
     }
@@ -113,7 +113,7 @@ public class ColumnGenerationSolver(Order[] orders, int threshold)
                         .ToDateTime(TimeOnly.MinValue) - DateTime.Today).Duration();
                 newPattern.CountLines();
                 newPattern.CalculateWaste(totalPieceWidth);
-                patterns.Add(newPattern);
+                _patterns.Add(newPattern);
             }
 
             // 2. Если разных длин
@@ -135,7 +135,7 @@ public class ColumnGenerationSolver(Order[] orders, int threshold)
                         .ToDateTime(TimeOnly.MinValue) - DateTime.Today).Duration();
                 newPattern.CountLines();
                 newPattern.CalculateWaste(totalPieceWidth);
-                patterns.Add(newPattern);
+                _patterns.Add(newPattern);
             }
         }
     }
@@ -177,7 +177,7 @@ public class ColumnGenerationSolver(Order[] orders, int threshold)
                         .ToDateTime(TimeOnly.MinValue) - DateTime.Today).Duration();
                 newPattern.CountLines();
                 newPattern.CalculateWaste(totalPieceWidth);
-                patterns.Add(newPattern);
+                _patterns.Add(newPattern);
             }
         }
     }
@@ -200,5 +200,5 @@ public class ColumnGenerationSolver(Order[] orders, int threshold)
         GenerateFourLinePatterns(lengthsSet);
     }
 
-    public List<Pattern> GetPatterns() => patterns;
+    public List<Pattern> GetPatterns() => _patterns;
 }

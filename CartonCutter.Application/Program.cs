@@ -9,19 +9,19 @@ public class Program
     {
         var orders = new Order[]
         {
-            new Order(1, "", "", "", "", null, null, null,
+            new(1, "", "", "", "", null, null, null,
                 new DateOnly(2025, 1, 23), 872, 612, null, 1000),
-            new Order(2, "", "", "", "", null, null, null,
+            new(2, "", "", "", "", null, null, null,
                 new DateOnly(2025, 1, 23), 360, 430, null, 5000),
-            new Order(3, "", "", "", "", null, null, null,
+            new(3, "", "", "", "", null, null, null,
                 new DateOnly(2025, 1, 23), 710, 270, null, 2000),
-            new Order(4, "", "", "", "", null, null, null,
+            new(4, "", "", "", "", null, null, null,
                 new DateOnly(2025, 1, 23), 1050, 1020, null, 1300),
-            new Order(5, "", "", "", "", null, null, null,
+            new(5, "", "", "", "", null, null, null,
                 new DateOnly(2025, 4, 20), 330, 596, null, 300),
-            new Order(6, "", "", "", "", null, null, null, 
+            new(6, "", "", "", "", null, null, null, 
                 new DateOnly(2025, 1, 23), 1390, 422, null, 3000),
-            new Order(7, "", "", "", "", null, null, null, 
+            new(7, "", "", "", "", null, null, null, 
                 new DateOnly(2025, 1, 23), 2067, 598, null, 2700)
         };
 

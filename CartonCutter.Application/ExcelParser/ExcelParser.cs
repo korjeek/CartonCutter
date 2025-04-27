@@ -62,7 +62,7 @@ public class ExcelParserOrder
         var newValues = new List<Order>();
         foreach (var pattern in patterns)
         {
-            foreach (var (orderId, amount) in pattern)
+            foreach (var (orderId, amount) in pattern) 
                 for (var i = 0; i < amount; i++)
                     newValues.AddOrderWithNewAmount(Values!.GetOrderById(orderId), orderId, pattern.OrdersAmountById[orderId]);
 
