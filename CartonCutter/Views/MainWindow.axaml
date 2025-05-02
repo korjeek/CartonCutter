@@ -26,14 +26,35 @@
               Background="#2B2D30"
               PointerPressed="OnPointerPressed">
             
-            <TextBlock Text="My Custom App" 
+            <TextBlock Text="CartonCutter" 
                        VerticalAlignment="Center"
                        Margin="10,0"
                        Foreground="White"/>
+            
+            <!-- Поле для ввода числа -->
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        IsVisible="{Binding !IsLoading}">
+                <TextBlock Text="Процент обреза"
+                           Foreground="White"
+                           Margin="0,0,5,0"
+                           VerticalAlignment="Center"/>
+                <TextBox HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         VerticalAlignment="Center"
+                         Text="{Binding Threshold, UpdateSourceTrigger=LostFocus}"
+                         Background="#3E4045"
+                         Foreground="White"
+                         BorderThickness="1"
+                         Padding="0"
+                         MaxLength="3"
+                         TextChanged="OnPercentOfCutChange"/>
+            </StackPanel>
+            
             <StackPanel Orientation="Horizontal" 
                         HorizontalAlignment="Right"
-                        Spacing="0"
-                        IsVisible="{Binding IsProgramWorking}">
+                        Spacing="0">
                 <Button Command="{Binding MinimizeWindow}"
                         Classes="title-bar-button">
                     <Image Source="../Assets/minimize-512.png" Width="10" Height="10"/>
@@ -55,19 +76,32 @@
               Background="#1E1F22"
               DragDrop.AllowDrop="True">
             
+            <!-- Основной контент -->
             <StackPanel HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
+                        VerticalAlignment="Center"
+                        IsVisible="{Binding !IsLoading}">
                 <Image Source="../Assets/cloud-computing-512.png"
                        Classes="cloud-computing-image"/>
                 <TextBlock Foreground="White"
                            VerticalAlignment="Center"
                            Text="Перетащите, чтобы загрузить Excel файл или"/>
-                <Button Command="{Binding OpenFileDialog}"
+                <Button Command="{Binding OpenUploadDialog}"
                         Classes="link-download-button">
                     <TextBlock Text="выберите его"
                                Foreground="#0078D4"
                                TextDecorations="Underline"/>
                 </Button>
+            </StackPanel>
+            
+            <!-- Индикатор загрузки -->
+            <StackPanel x:Name="LoadingIndicator"
+                        IsVisible="{Binding IsLoading}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <TextBlock x:Name="LoadingText"
+                           Foreground="White"
+                           Text="Идёт процесс сортировки. Это займёт некоторое время..."
+                           HorizontalAlignment="Center"/>
             </StackPanel>
         </Grid>
     </Grid>

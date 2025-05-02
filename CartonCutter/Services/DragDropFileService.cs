@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Input;
 using Avalonia.Platform.Storage;
 using CartonCutter.Services.Interfaces;
@@ -13,15 +15,14 @@ public class DragDropFileService: IDragDropFileService
         ? DragDropEffects.Copy 
         : DragDropEffects.None;
 
-    public void Drop(DragEventArgs eventArgs)
+    public async Task<Stream?> DropAsync(DragEventArgs eventArgs)
     {
         var files = eventArgs.Data.GetFiles();
 
-        if (files == null)
-            return;
-        
-        var filePath = files.FirstOrDefault()?.TryGetLocalPath();
-        if (!string.IsNullOrEmpty(filePath))
-            Console.WriteLine("Good!");
+        var item = files?.FirstOrDefault();
+        if (item is not IStorageFile file)
+            return null;
+
+        return await file.OpenReadAsync();
     }
 }

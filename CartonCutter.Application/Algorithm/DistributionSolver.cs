@@ -11,7 +11,7 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
     public Dictionary<int, int> GetLeftOrdersAmount() => _ordersLeftAmount
         .Where(kv => kv.Value != 0)
         .ToDictionary();
-    public List<Pattern> GetResultPatterns() => resultPatterns;
+    public List<Pattern> GetResultPatterns() => _resultPatterns;
     public async Task Solve()
     {
         await Task.Run(() =>

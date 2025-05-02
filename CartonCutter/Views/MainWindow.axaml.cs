@@ -1,4 +1,3 @@
-using System;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -21,10 +20,10 @@ public partial class MainWindow : Window
             viewModel.DragOverFile.Execute(eventArgs);
     }
 
-    private void OnDrop(object? sender, DragEventArgs eventArgs)
+    private async void OnDrop(object? sender, DragEventArgs eventArgs)
     {
         if (DataContext is MainViewModel viewModel)
-            viewModel.DropFile.Execute(eventArgs);
+            await viewModel.DropFile(eventArgs);
     }
     
     private void OnPointerPressed(object? sender, PointerPressedEventArgs eventArgs)
@@ -32,10 +31,29 @@ public partial class MainWindow : Window
         if (DataContext is MainViewModel viewModel)
             viewModel.MoveAndDragWindow.Execute(eventArgs);
     }
-    
-    [Obsolete("Obsolete")]
-    private async void OnBrowseClick(object sender, RoutedEventArgs eventArgs)
+
+    private void OnPercentOfCutChange(object? sender, TextChangedEventArgs e)
     {
+        if (sender is not TextBox textBox || string.IsNullOrEmpty(textBox.Text)) 
+            return;
+
+        if (!int.TryParse(textBox.Text, out var value))
+        {
+            textBox.Text = "0";
+            textBox.CaretIndex = textBox.Text.Length;
+            return;
+        }
         
+        switch (value)
+        {
+            case < 0:
+                textBox.Text = "0";
+                textBox.CaretIndex = textBox.Text.Length;
+                break;
+            case > 100:
+                textBox.Text = "100";
+                textBox.CaretIndex = textBox.Text.Length;
+                break;
+        }
     }
 }

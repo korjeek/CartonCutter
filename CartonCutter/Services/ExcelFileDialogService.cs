@@ -1,15 +1,13 @@
-﻿using Avalonia.Platform.Storage;
-using CartonCutter.Application.ExcelParser;
+﻿using System.IO;
+using System.Threading.Tasks;
+using Avalonia.Platform.Storage;
 using CartonCutter.Services.Interfaces;
 using CartonCutter.Views;
-using CartonCutter.Application.Algorithm;
 
 namespace CartonCutter.Services;
 
 public class ExcelFileDialogService(MainWindow window): IFileDialogService
 {
-    private readonly ExcelParserOrder _excelParser = new();
-    
     public async Task<Stream?> OpenFileUploadDialogAsync()
     {
         var filePickerOptions = new FilePickerOpenOptions
@@ -32,7 +30,7 @@ public class ExcelFileDialogService(MainWindow window): IFileDialogService
         return await file[0].OpenReadAsync();
     }
 
-    public async Task OpenFileDownloadDialogAsync()
+    public async Task<Stream?> OpenFileDownloadDialogAsync()
     {
         var saveFileDialog = new FilePickerSaveOptions
         {
@@ -49,20 +47,9 @@ public class ExcelFileDialogService(MainWindow window): IFileDialogService
 
         var file = await window.StorageProvider.SaveFilePickerAsync(saveFileDialog);
         if (file is null)
-            return;
+            return null;
         
         var stream = await file.OpenWriteAsync();
-        _excelParser.Create().Fill().SaveInFile(stream);
-    }
-
-    public async Task ExecuteProgram(Stream stream)
-    {
-        var values = _excelParser.Open(stream).Parse().Values;
-
-        if (values == null)
-            return null;
-
-        var algorithm = new Algorithm(values, 12);
-        _excelParser.UpdateValuesBySorted(algorithm.Solve());
+        return stream;
     }
 }

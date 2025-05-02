@@ -9,14 +9,14 @@ public class Algorithm(Order[] orders, int threshold)
     
     public async Task<List<Pattern>> Solve()
     {
-        await patternGenerator.Solve();
+        await _patternGenerator.Solve();
         // Console.WriteLine(patternGenerator.GetPatterns().Count);
         // foreach (var pattern in patternGenerator.GetPatterns())
         //     Console.WriteLine(pattern);
         
         // Console.WriteLine();
-        distributionSolver = new DistributionSolver(patternGenerator.GetPatterns(), orders);
-        await distributionSolver.Solve();
+        _distributionSolver = new DistributionSolver(_patternGenerator.GetPatterns(), orders);
+        await _distributionSolver.Solve();
         // Console.WriteLine(distributionSolver.GetResultPatterns().Count);
         // foreach (var pattern in distributionSolver.GetResultPatterns()) 
         //     Console.WriteLine(pattern);
@@ -27,7 +27,7 @@ public class Algorithm(Order[] orders, int threshold)
 
         await Task.Run(() =>
         {
-            foreach (var pattern in distributionSolver.GetResultPatterns())
+            foreach (var pattern in _distributionSolver.GetResultPatterns())
             {
                 if (pattern is Pattern1380 pattern1380)
                 {
@@ -39,8 +39,8 @@ public class Algorithm(Order[] orders, int threshold)
             }
         });
 
-        return distributionSolver.GetResultPatterns();
+        return _distributionSolver.GetResultPatterns();
     }
     
-    public Dictionary<int, int> GetLeftAmountsDictByOrderId() => distributionSolver.GetLeftOrdersAmount();
+    public Dictionary<int, int> GetLeftAmountsDictByOrderId() => _distributionSolver.GetLeftOrdersAmount();
 }
