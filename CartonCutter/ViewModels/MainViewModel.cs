@@ -25,7 +25,7 @@ public partial class MainViewModel(
     public ICommand MoveAndDragWindow { get; } = ReactiveCommand.Create<PointerPressedEventArgs>(windowService.MoveAndDrag);
     public IImage ToggleWindowStateIcon { get; } = imageService.SetImage();
     public ICommand DragOverFile { get; } = ReactiveCommand.Create<DragEventArgs>(dragDropFileService.DragOver);
-    public string Threshold { get; set; } = "100";
+    public string Threshold { get; set; } = "12";
 
     [ObservableProperty] 
     private bool _isLoading;

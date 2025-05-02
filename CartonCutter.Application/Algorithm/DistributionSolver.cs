@@ -5,6 +5,7 @@ namespace CartonCutter.Application.Algorithm;
 
 public class DistributionSolver(List<Pattern> patterns, Order[] orders)
 {
+    private const int MinOrderAmount = 10;
     private readonly Dictionary<int, int> _ordersLeftAmount = new(); // id заказа и оставшееся количество
     private readonly List<Pattern> _resultPatterns = [];
 
@@ -53,7 +54,7 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
                         return kv.Value / orderInPatternCount + (kv.Value % orderInPatternCount == 0 ? 0 : 1);
                     })
                     .Min(); // Нашли допустимое количество шаблонов, которе можно сделать, чтобы не выйти за пределы каждого заказа
-                if (minOrderAmount <= 0)
+                if (minOrderAmount <= MinOrderAmount)
                     continue;
                 foreach (var (orderId, orderIdCount) in pattern1030)
                     _ordersLeftAmount[orderId] -= minOrderAmount * orderIdCount;
@@ -94,7 +95,7 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
                     })
                     .Min();
                 
-                if (minSmallOrderAmount <= 0 || minBigOrdersAmount <= 0)
+                if (minSmallOrderAmount <= MinOrderAmount || minBigOrdersAmount <= MinOrderAmount)
                     continue;
 
                 var smallOrdersTotalLength = minSmallOrderAmount * pattern1380.SmallLength;
@@ -121,7 +122,7 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
                         minSmallOrderAmount++;
                 }
 
-                if (minSmallOrderAmount <= 0 || minBigOrdersAmount <= 0)
+                if (minSmallOrderAmount <= MinOrderAmount || minBigOrdersAmount <= MinOrderAmount)
                     continue;
 
                 foreach (var (orderId, orderIdCount) in pattern1380)
