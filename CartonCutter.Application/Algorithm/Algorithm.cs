@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using CartonCutter.Domain.Models;
+﻿using CartonCutter.Domain.Models;
 
 namespace CartonCutter.Application.Algorithm;
 
@@ -24,7 +23,7 @@ public class Algorithm(Order[] orders, int threshold)
         // File.AppendAllLines(filePath,
         //     _distributionSolver.GetResultPatterns()
         //         .Select(p => p.WastePercentage.ToString(CultureInfo.InvariantCulture)));
-        //
+        
         
         // Console.WriteLine(_distributionSolver.GetResultPatterns().Count);
         // foreach (var pattern in _distributionSolver.GetResultPatterns()) 
