@@ -16,7 +16,7 @@ public class Pattern(int maxWidth) : IEnumerable<(int orderId, int orderIdCount)
     public void CalculateWaste(int totalWidth)
     {
         Waste = maxWidth - totalWidth;
-        WastePercentage = Waste / totalWidth * 100;
+        WastePercentage = Waste / maxWidth * 100;
     }
 
     public void CountLines()

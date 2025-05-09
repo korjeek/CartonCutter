@@ -17,6 +17,6 @@ public class Pattern1030(int length) : Pattern(1030)
     {
         var prodStr = string.Join(", ", Production.Select(kv => $"Order {kv.Key}: {kv.Value}"));
         return
-            $"Pattern1030 (Length: {Length}) -> [{prodStr}], Amount = {ProductTimesAmount}, Waste = {Waste}, Waste percentage = {Waste / MaxWidth * 100}%";
+            $"Pattern1030 (Length: {Length}) -> [{prodStr}], Amount = {ProductTimesAmount}, Waste = {Waste}, Waste percentage = {WastePercentage}%";
     }
 }

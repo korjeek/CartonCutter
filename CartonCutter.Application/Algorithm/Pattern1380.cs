@@ -36,6 +36,6 @@ public class Pattern1380 : Pattern
     public override string ToString()
     {
         var prodStr = string.Join(", ", Production.Select(kv => $"Order {kv.Key}: {kv.Value}"));
-        return $"Pattern1380 (Lengths: {BigLength}, {SmallLength}) -> [{prodStr}], BigAmount = {ProductBigTimesAmount}, SmallAmount = {ProductSmallTimesAmount}, Waste = {Waste}, Waste percentage = {Waste / MaxWidth * 100}%";
+        return $"Pattern1380 (Lengths: {BigLength}, {SmallLength}) -> [{prodStr}], BigAmount = {ProductBigTimesAmount}, SmallAmount = {ProductSmallTimesAmount}, Waste = {Waste}, Waste percentage = {WastePercentage}%";
     }
 }

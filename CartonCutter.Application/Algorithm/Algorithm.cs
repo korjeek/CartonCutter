@@ -1,4 +1,5 @@
-﻿using CartonCutter.Domain.Models;
+﻿using System.Globalization;
+using CartonCutter.Domain.Models;
 
 namespace CartonCutter.Application.Algorithm;
 
@@ -10,15 +11,23 @@ public class Algorithm(Order[] orders, int threshold)
     public async Task<List<Pattern>> Solve()
     {
         await _patternGenerator.Solve();
-        // Console.WriteLine(patternGenerator.GetPatterns().Count);
-        // foreach (var pattern in patternGenerator.GetPatterns())
+        // Console.WriteLine(_patternGenerator.GetPatterns().Count);
+        // foreach (var pattern in _patternGenerator.GetPatterns())
         //     Console.WriteLine(pattern);
         
         // Console.WriteLine();
         _distributionSolver = new DistributionSolver(_patternGenerator.GetPatterns(), orders);
         await _distributionSolver.Solve();
-        // Console.WriteLine(distributionSolver.GetResultPatterns().Count);
-        // foreach (var pattern in distributionSolver.GetResultPatterns()) 
+        
+        // Запись для статистики проекта
+        // var filePath = @"C:\Users\Maksim Tseshnaty\Desktop\Unik\Projects\Optimization\stat.txt";
+        // File.AppendAllLines(filePath,
+        //     _distributionSolver.GetResultPatterns()
+        //         .Select(p => p.WastePercentage.ToString(CultureInfo.InvariantCulture)));
+        //
+        
+        // Console.WriteLine(_distributionSolver.GetResultPatterns().Count);
+        // foreach (var pattern in _distributionSolver.GetResultPatterns()) 
         //     Console.WriteLine(pattern);
         
         // Console.WriteLine("\nLeft");
