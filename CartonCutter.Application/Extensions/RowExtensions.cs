@@ -40,10 +40,10 @@ public static class RowExtensions
             while (j++ < header.Cells[i].ColumnIndex)
                 row.CreateCell(j).SetBlank();
 
-            row.CreateCell(header.Cells[i].ColumnIndex).SetCellValue(header.Cells[i].StringCellValue);
+            row.CreateCell(header.Cells[i].ColumnIndex).SetCellValueFromAnother(header.Cells[i]);
         }
     }
-
+    
     public static bool IsValid(this IRow row) =>
         NotBlankCells.All(index => row.GetCell(index) is { CellType: not CellType.Blank });
 }

@@ -49,7 +49,7 @@ public class ExcelParserOrder
             .GetSheetAt(0)
             .Skip(1)
             .Where(row => row.IsValid())
-            .Select((row, i) => row.Cells.GetOrder(i))
+            .Select((row, i) => row.Cells.GetOrder(i, row.LastCellNum))
             .ToArray();
 
         Header = Workbook.GetSheetAt(0).FirstOrDefault();
