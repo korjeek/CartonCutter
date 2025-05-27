@@ -133,7 +133,7 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
                 foreach (var (orderId, orderIdCount) in pattern1380)
                     _ordersLeftAmount[orderId] -= 
                         orders.GetOrderById(orderId).WorkPieceLength == pattern1380.BigLength ? 
-                            minBigOrdersAmount : minSmallOrderAmount  * orderIdCount;
+                            minBigOrdersAmount * orderIdCount : minSmallOrderAmount  * orderIdCount;
                 
                 
                 pattern1380.ProductBigTimesAmount = minBigOrdersAmount;
