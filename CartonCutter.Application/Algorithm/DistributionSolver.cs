@@ -27,7 +27,12 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
         patterns.Sort((p1, p2) =>
         {
             var dateCompare = p1.TimeToShip.CompareTo(p2.TimeToShip);
-            return dateCompare != 0 ? dateCompare : p2.TotalLinesCount.CompareTo(p1.TotalLinesCount);
+            var wasteCompare = p1.Waste.CompareTo(p2.Waste);
+            var totalLinesCountCompare = p2.TotalLinesCount.CompareTo(p1.TotalLinesCount);
+
+            return dateCompare != 0 ? dateCompare :
+                wasteCompare != 0 ? wasteCompare : 
+                totalLinesCountCompare;
         });
     }
 

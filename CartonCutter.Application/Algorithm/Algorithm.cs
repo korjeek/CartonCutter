@@ -13,8 +13,8 @@ public class Algorithm(Order[] orders, int threshold)
         // Console.WriteLine(_patternGenerator.GetPatterns().Count);
         // foreach (var pattern in _patternGenerator.GetPatterns())
         //     Console.WriteLine(pattern);
-        
         // Console.WriteLine();
+        
         _distributionSolver = new DistributionSolver(_patternGenerator.GetPatterns(), orders);
         await _distributionSolver.Solve();
         
@@ -28,9 +28,9 @@ public class Algorithm(Order[] orders, int threshold)
         // Console.WriteLine(_distributionSolver.GetResultPatterns().Count);
         // foreach (var pattern in _distributionSolver.GetResultPatterns()) 
         //     Console.WriteLine(pattern);
-        
+        //
         // Console.WriteLine("\nLeft");
-        // foreach (var p in distributionSolver.GetLeftOrdersAmount())
+        // foreach (var p in _distributionSolver.GetLeftOrdersAmount())
         //     Console.WriteLine(p);
 
         await Task.Run(() =>
