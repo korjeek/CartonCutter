@@ -6,6 +6,7 @@ namespace CartonCutter.Application.Algorithm;
 public class DistributionSolver(List<Pattern> patterns, Order[] orders)
 {
     private const int MinOrderAmount = 10;
+    private const int MinOrderLength = 500000;
     private readonly Dictionary<int, int> _ordersLeftAmount = new(); // id заказа и оставшееся количество
     private readonly List<Pattern> _resultPatterns = [];
 
@@ -36,6 +37,15 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
         });
     }
 
+    private bool IsOrderLengthFitByTotalLength(Pattern pattern)
+    {
+        if (pattern is Pattern1030 pattern1030)
+            return pattern1030.ProductTimesAmount * (long)pattern1030.Length >= MinOrderLength;
+        var pattern1380 = (Pattern1380)pattern;
+        return pattern1380.ProductBigTimesAmount * (long)pattern1380.BigLength >= MinOrderLength ||
+               pattern1380.ProductSmallTimesAmount * (long)pattern1380.SmallLength >= MinOrderLength;
+    }
+
     private void DistributeOrders()
     {
         FillInitialLeftAmountDictionary();
@@ -63,8 +73,10 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
                     continue;
                 foreach (var (orderId, orderIdCount) in pattern1030)
                     _ordersLeftAmount[orderId] -= minOrderAmount * orderIdCount;
-
                 pattern1030.ProductTimesAmount = minOrderAmount;
+
+                if (!IsOrderLengthFitByTotalLength(pattern))
+                    continue;
                 _resultPatterns.Add(pattern1030);
             }
             
@@ -138,6 +150,9 @@ public class DistributionSolver(List<Pattern> patterns, Order[] orders)
                 
                 pattern1380.ProductBigTimesAmount = minBigOrdersAmount;
                 pattern1380.ProductSmallTimesAmount = minSmallOrderAmount;
+                
+                if (!IsOrderLengthFitByTotalLength(pattern))
+                    continue;
                 _resultPatterns.Add(pattern1380);
             }
         }
